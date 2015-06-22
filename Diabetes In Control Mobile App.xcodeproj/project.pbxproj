@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F43BCAD1B3884E800FD53BF /* DICClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43BCAC1B3884E800FD53BF /* DICClient.swift */; };
+		0F43BCAF1B3884FD00FD53BF /* DICConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43BCAE1B3884FD00FD53BF /* DICConstants.swift */; };
+		0F43BCB11B3885BC00FD53BF /* DICArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43BCB01B3885BC00FD53BF /* DICArticle.swift */; };
+		0F43BCB51B388A8100FD53BF /* DICXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43BCB41B388A8100FD53BF /* DICXMLParser.swift */; };
+		0FC77F6F1B31B88F00C82887 /* ArticleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC77F6E1B31B88F00C82887 /* ArticleViewCell.swift */; };
 		0FDE77D31B307B7C009A70A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FDE77D21B307B7C009A70A4 /* AppDelegate.swift */; };
-		0FDE77D51B307B7C009A70A4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FDE77D41B307B7C009A70A4 /* ViewController.swift */; };
+		0FDE77D51B307B7C009A70A4 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FDE77D41B307B7C009A70A4 /* MainViewController.swift */; };
 		0FDE77D81B307B7C009A70A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0FDE77D61B307B7C009A70A4 /* Main.storyboard */; };
 		0FDE77DA1B307B7C009A70A4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FDE77D91B307B7C009A70A4 /* Images.xcassets */; };
 		0FDE77DD1B307B7C009A70A4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FDE77DB1B307B7C009A70A4 /* LaunchScreen.xib */; };
@@ -26,10 +31,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0F43BCAC1B3884E800FD53BF /* DICClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DICClient.swift; sourceTree = "<group>"; };
+		0F43BCAE1B3884FD00FD53BF /* DICConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DICConstants.swift; sourceTree = "<group>"; };
+		0F43BCB01B3885BC00FD53BF /* DICArticle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DICArticle.swift; sourceTree = "<group>"; };
+		0F43BCB41B388A8100FD53BF /* DICXMLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DICXMLParser.swift; sourceTree = "<group>"; };
+		0FC77F6E1B31B88F00C82887 /* ArticleViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleViewCell.swift; sourceTree = "<group>"; };
 		0FDE77CD1B307B7C009A70A4 /* Diabetes In Control Mobile App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Diabetes In Control Mobile App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FDE77D11B307B7C009A70A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0FDE77D21B307B7C009A70A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0FDE77D41B307B7C009A70A4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0FDE77D41B307B7C009A70A4 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		0FDE77D71B307B7C009A70A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0FDE77D91B307B7C009A70A4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0FDE77DC1B307B7C009A70A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -56,6 +66,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0F43BCB31B3885CF00FD53BF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0F43BCAC1B3884E800FD53BF /* DICClient.swift */,
+				0F43BCB41B388A8100FD53BF /* DICXMLParser.swift */,
+				0F43BCB01B3885BC00FD53BF /* DICArticle.swift */,
+				0F43BCAE1B3884FD00FD53BF /* DICConstants.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		0FDE77C41B307B7C009A70A4 = {
 			isa = PBXGroup;
 			children = (
@@ -78,8 +99,10 @@
 			isa = PBXGroup;
 			children = (
 				0FDE77D21B307B7C009A70A4 /* AppDelegate.swift */,
-				0FDE77D41B307B7C009A70A4 /* ViewController.swift */,
+				0FDE77D41B307B7C009A70A4 /* MainViewController.swift */,
+				0F43BCB31B3885CF00FD53BF /* Model */,
 				0FDE77D61B307B7C009A70A4 /* Main.storyboard */,
+				0FC77F6E1B31B88F00C82887 /* ArticleViewCell.swift */,
 				0FDE77D91B307B7C009A70A4 /* Images.xcassets */,
 				0FDE77DB1B307B7C009A70A4 /* LaunchScreen.xib */,
 				0FDE77D01B307B7C009A70A4 /* Supporting Files */,
@@ -212,8 +235,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0FDE77D51B307B7C009A70A4 /* ViewController.swift in Sources */,
+				0FDE77D51B307B7C009A70A4 /* MainViewController.swift in Sources */,
+				0F43BCAD1B3884E800FD53BF /* DICClient.swift in Sources */,
+				0F43BCB51B388A8100FD53BF /* DICXMLParser.swift in Sources */,
+				0FC77F6F1B31B88F00C82887 /* ArticleViewCell.swift in Sources */,
+				0F43BCAF1B3884FD00FD53BF /* DICConstants.swift in Sources */,
 				0FDE77D31B307B7C009A70A4 /* AppDelegate.swift in Sources */,
+				0F43BCB11B3885BC00FD53BF /* DICArticle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,6 +370,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Diabetes In Control Mobile App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -352,6 +381,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Diabetes In Control Mobile App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -411,6 +441,7 @@
 				0FDE77EE1B307B7C009A70A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0FDE77EF1B307B7C009A70A4 /* Build configuration list for PBXNativeTarget "Diabetes In Control Mobile AppTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +450,7 @@
 				0FDE77F11B307B7C009A70A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
