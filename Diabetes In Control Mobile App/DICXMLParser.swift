@@ -10,22 +10,21 @@ import Foundation
 
 class DICXMLParser: NSObject, NSXMLParserDelegate {
 
+    var parser : NSXMLParser?
+    
     var articles = [DICArticle]()
     
     // these will fill up as we read each article element
     var title = ""
     var link = ""
+    var category = ""
     var descr = ""
+    var content = ""
     
     var currentlyReading = CurrentlyReading.None
     
     //will call this delegate when we finish loading the articles
-    var delegate : DICXMLParserDelegate
-    
-    init(delegate : DICXMLParserDelegate)
-    {
-        self.delegate = delegate
-    }
+    var delegate : DICXMLParserDelegate?
     
     // updates currentlyReading to reflect what element we are currently reading
     func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [NSObject : AnyObject]) {
@@ -36,9 +35,15 @@ class DICXMLParser: NSObject, NSXMLParserDelegate {
         case "link":
             currentlyReading = .Link
             link = ""
+        case "category":
+            currentlyReading = .Category
+            category = ""
         case "description":
             currentlyReading = .Descr
             descr = ""
+        case "content:encoded":
+            currentlyReading = .Content
+            content = ""
         default:
             currentlyReading = .None
         }
@@ -46,10 +51,9 @@ class DICXMLParser: NSObject, NSXMLParserDelegate {
     
     // if we just got done reading the last element, create a new DICArticle and add to array
     func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        if currentlyReading == .Descr {
-            let article = DICArticle(title: title, link: link, descr: descr)
+        if currentlyReading == .Content {
+            let article = DICArticle(title: title, link: link, category: category, descr: descr, content: content)
             articles.append(article)
-            println("loaded \(article)")
         }
     }
     
@@ -61,8 +65,12 @@ class DICXMLParser: NSObject, NSXMLParserDelegate {
                 title += string
             case .Link:
                 link += string
+            case .Category:
+                category += string
             case .Descr:
                 descr += string
+            case .Content:
+                content += string
             default:
                 break
             }
@@ -71,16 +79,32 @@ class DICXMLParser: NSObject, NSXMLParserDelegate {
     
     // callback to the delegate with our articles
     func parserDidEndDocument(parser: NSXMLParser) {
-        delegate.articlesDidFinishLoading(articles)
+        parser.abortParsing()
+        delegate?.articlesDidFinishLoading(articles)
+        abortAndReset()
     }
     
     func parser(parser: NSXMLParser, parseErrorOccurred parseError: NSError) {
-        println(parseError)
+        //println(parseError)
+        println("Error parsing XML")
+    }
+    
+    func abortAndReset() {
+        parser?.abortParsing()
+        
+        articles = [DICArticle]()
+        title = ""
+        link = ""
+        category = ""
+        descr = ""
+        content = ""
+        
+        currentlyReading = .None
     }
     
     // used to determine what element is currently being raad
     enum CurrentlyReading {
-        case Title, Link, Descr, None
+        case Title, Link, Category, Descr, Content, None
     }
     
 }

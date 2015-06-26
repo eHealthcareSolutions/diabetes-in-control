@@ -21,8 +21,7 @@ class ArticleViewCell: UICollectionViewCell {
     
     var descr = "Descr" {
         didSet {
-            let descrWithoutHTML = descr.stringByReplacingOccurrencesOfString("<[^>]+>", withString: "", options: .RegularExpressionSearch, range: nil)
-            descrLabel.text = descrWithoutHTML
+            descrLabel.text = descr
         }
     }
     

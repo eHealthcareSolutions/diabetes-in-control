@@ -11,6 +11,7 @@
 		0F43BCAF1B3884FD00FD53BF /* DICConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43BCAE1B3884FD00FD53BF /* DICConstants.swift */; };
 		0F43BCB11B3885BC00FD53BF /* DICArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43BCB01B3885BC00FD53BF /* DICArticle.swift */; };
 		0F43BCB51B388A8100FD53BF /* DICXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43BCB41B388A8100FD53BF /* DICXMLParser.swift */; };
+		0F8911921B3AE93B0043AE9B /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8911911B3AE93B0043AE9B /* ArticleViewController.swift */; };
 		0FC77F6F1B31B88F00C82887 /* ArticleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC77F6E1B31B88F00C82887 /* ArticleViewCell.swift */; };
 		0FDE77D31B307B7C009A70A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FDE77D21B307B7C009A70A4 /* AppDelegate.swift */; };
 		0FDE77D51B307B7C009A70A4 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FDE77D41B307B7C009A70A4 /* MainViewController.swift */; };
@@ -35,6 +36,7 @@
 		0F43BCAE1B3884FD00FD53BF /* DICConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DICConstants.swift; sourceTree = "<group>"; };
 		0F43BCB01B3885BC00FD53BF /* DICArticle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DICArticle.swift; sourceTree = "<group>"; };
 		0F43BCB41B388A8100FD53BF /* DICXMLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DICXMLParser.swift; sourceTree = "<group>"; };
+		0F8911911B3AE93B0043AE9B /* ArticleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleViewController.swift; sourceTree = "<group>"; };
 		0FC77F6E1B31B88F00C82887 /* ArticleViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleViewCell.swift; sourceTree = "<group>"; };
 		0FDE77CD1B307B7C009A70A4 /* Diabetes In Control Mobile App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Diabetes In Control Mobile App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FDE77D11B307B7C009A70A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -77,6 +79,23 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		0F8911931B3AE95E0043AE9B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0FC77F6E1B31B88F00C82887 /* ArticleViewCell.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		0F8911941B3AE9920043AE9B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0FDE77D41B307B7C009A70A4 /* MainViewController.swift */,
+				0F8911911B3AE93B0043AE9B /* ArticleViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
 		0FDE77C41B307B7C009A70A4 = {
 			isa = PBXGroup;
 			children = (
@@ -98,11 +117,11 @@
 		0FDE77CF1B307B7C009A70A4 /* Diabetes In Control Mobile App */ = {
 			isa = PBXGroup;
 			children = (
-				0FDE77D21B307B7C009A70A4 /* AppDelegate.swift */,
-				0FDE77D41B307B7C009A70A4 /* MainViewController.swift */,
-				0F43BCB31B3885CF00FD53BF /* Model */,
 				0FDE77D61B307B7C009A70A4 /* Main.storyboard */,
-				0FC77F6E1B31B88F00C82887 /* ArticleViewCell.swift */,
+				0F43BCB31B3885CF00FD53BF /* Model */,
+				0F8911931B3AE95E0043AE9B /* View */,
+				0F8911941B3AE9920043AE9B /* Controller */,
+				0FDE77D21B307B7C009A70A4 /* AppDelegate.swift */,
 				0FDE77D91B307B7C009A70A4 /* Images.xcassets */,
 				0FDE77DB1B307B7C009A70A4 /* LaunchScreen.xib */,
 				0FDE77D01B307B7C009A70A4 /* Supporting Files */,
@@ -236,6 +255,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FDE77D51B307B7C009A70A4 /* MainViewController.swift in Sources */,
+				0F8911921B3AE93B0043AE9B /* ArticleViewController.swift in Sources */,
 				0F43BCAD1B3884E800FD53BF /* DICClient.swift in Sources */,
 				0F43BCB51B388A8100FD53BF /* DICXMLParser.swift in Sources */,
 				0FC77F6F1B31B88F00C82887 /* ArticleViewCell.swift in Sources */,

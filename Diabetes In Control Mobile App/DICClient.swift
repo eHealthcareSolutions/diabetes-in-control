@@ -11,39 +11,57 @@ import Foundation
 class DICClient: NSObject {
 
     var session: NSURLSession
-    var dicXMLParser : DICXMLParser?
+    var dicXMLParser : DICXMLParser
+    var task : NSURLSessionTask?
     
     // closure to call when the articles are loaded
-    var articlesLoadedClosure : ([DICArticle] -> ())?
+    var articlesLoadedCompletionHandler: ([DICArticle] -> ())?
     
     override init() {
         session = NSURLSession.sharedSession()
+        dicXMLParser = DICXMLParser()
         
         super.init()
+        dicXMLParser.delegate = self
     }
     
-    func getArticleFeed(whenDone : ([DICArticle] -> ())?) {
-        articlesLoadedClosure = whenDone
+    func getArticleFeed(category : String = "", page : Int = 1, completionHandler : ([DICArticle] -> ())?) {
+        // if we are already parsing, cancel it to start parsing new request
+        task?.cancel()
+        dicXMLParser.abortAndReset()
+        
+        articlesLoadedCompletionHandler = completionHandler
         
         // create url request from feed url (DICConstants.swift)
-        let url = NSURL(string: Constants.url)
+        var url : NSURL?
+        if category == "" { //want main article feed
+            url = NSURL(string: Constants.baseUrl + Constants.feed + Constants.paged + String(page))
+        } else {
+            var categoryUrl = "" // if we can't find the category url, just get main feed
+            if let categoryIndex = find(Constants.categories,category) {
+                categoryUrl = Constants.categoryUrls[categoryIndex]
+            }
+            url = NSURL(string: Constants.baseUrl + categoryUrl + Constants.feed + Constants.paged + String(page))
+        }
+        println("Page=\(page)")
         let request = NSURLRequest(URL: url!)
         
-        let task = session.dataTaskWithRequest(request) {data, response, downloadError in
+        task = session.dataTaskWithRequest(request) {data, response, downloadError in
             if let error = downloadError {
                 println(error)
             }
             else {
                 // begin parsing xml with DICXMLParser
-                self.dicXMLParser = DICXMLParser(delegate: self)
-                
                 var xmlParser = NSXMLParser(data: data)
                 xmlParser.delegate = self.dicXMLParser
                 xmlParser.parse()
+                if xmlParser.parserError?.code == 1 { //internal error, must retry
+                    self.getArticleFeed(category: category, page: page, completionHandler: completionHandler)
+                }
             }
         }
         
-        task.resume()
+        task!.resume()
     }
     
     class func sharedInstance() -> DICClient {
@@ -60,8 +78,8 @@ class DICClient: NSObject {
 // MARK: DICXMLParserDelegate
 extension DICClient: DICXMLParserDelegate {
     func articlesDidFinishLoading(articles : [DICArticle]) {
-        if (articlesLoadedClosure != nil) {
-            articlesLoadedClosure!(articles)
+        if (articlesLoadedCompletionHandler != nil) {
+            articlesLoadedCompletionHandler!(articles)
         }
     }
 }
