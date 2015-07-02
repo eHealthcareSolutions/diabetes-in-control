@@ -15,16 +15,15 @@ class MainViewController: UIViewController {
     
     // buttons
     @IBOutlet weak var btnHome: UIButton!
-    @IBOutlet weak var btnNew: UIButton!
+    @IBOutlet weak var btnFavorites: UIButton!
     @IBOutlet weak var btnPopular: UIButton!
     @IBOutlet var btnCategories: [UIButton]!
     
     var articles = [DICArticle]()
     var loadingNewArticles = false
-    var noArticlesLeft = false
-    var category : String = ""
-    // holds the article that was just clicked on so we can give it to the article view controller
-    var articleToShow: DICArticle?
+    var noArticlesLeft = false // at the bottom of infinite scroll
+    var category : String = "" // current category
+    var articleToShow: DICArticle? // holds the article that was just clicked on so we can give it to the article view controller
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,8 +41,28 @@ class MainViewController: UIViewController {
         }
         // more padding
         btnHome.setTitle(padding + btnHome.titleForState(.Normal)! + padding, forState: .Normal)
-        btnNew.setTitle(padding + btnNew.titleForState(.Normal)! + padding, forState: .Normal)
+        btnFavorites.setTitle(padding + btnFavorites.titleForState(.Normal)! + padding, forState: .Normal)
         btnPopular.setTitle(padding + btnPopular.titleForState(.Normal)! + padding, forState: .Normal)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        // if we're in the favorites, things may have changed when we finish viewing an article. so we have to get favorites again
+        if category == "Favorites" {
+            articles = []
+            articlesDidFinishLoading(DICFavoritesList.sharedInstance().articles)
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        // update buttons with correct font size
+        let btnFontSize = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline).pointSize
+        let btnFont = UIFont(name: DICClient.Constants.fontName, size: btnFontSize)
+        for i in 0..<btnCategories.count {
+            btnCategories[i].titleLabel!.font = btnFont
+        }
+        btnHome.titleLabel!.font = btnFont
+        btnFavorites.titleLabel!.font = btnFont
+        btnPopular.titleLabel!.font = btnFont
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,6 +76,7 @@ class MainViewController: UIViewController {
         if loadingNewArticles { // already loading
             return
         }
+        // otherwise start loading articles
         loadingNewArticles = true
         DICClient.sharedInstance().getArticleFeed(category: category, page: page) { articles in
             self.articlesDidFinishLoading(articles)
@@ -71,9 +91,17 @@ class MainViewController: UIViewController {
         articles = []
         collectionView.reloadData()
         
-        let category = sender.titleForState(UIControlState.Normal)
-        // get feed for selected category
-        loadNewArticles(category: category!)
+        //get category, remove padding
+        category = sender.titleForState(UIControlState.Normal)!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        
+        // if category is favorites, get favorites, otherwise loadnewarticles
+        if category == "Favorites" {
+            articlesDidFinishLoading(DICFavoritesList.sharedInstance().articles)
+        }
+        else {
+            // get feed for selected category
+            loadNewArticles(category: category)
+        }
     }
     
     // function to be called when articles are finished loading
@@ -96,6 +124,10 @@ extension MainViewController: UICollectionViewDataSource {
 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         if indexPath.row >= articles.count {
+            if category == "Favorites" { // don't want to load new articles in favorites
+                noArticlesLeft = true
+            }
+            
             if !loadingNewArticles && !noArticlesLeft { //start loading new articles
                 var pageToLoad = articles.count / DICClient.Constants.articlesPerPage + 1
                 loadNewArticles(category: self.category, page : pageToLoad)
@@ -105,11 +137,15 @@ extension MainViewController: UICollectionViewDataSource {
                 var articleCell = collectionView.dequeueReusableCellWithReuseIdentifier("articleViewCell", forIndexPath: indexPath) as! ArticleViewCell
                 articleCell.title = "No more articles to display!"
                 articleCell.descr = "Select another category to view more articles."
+                
+                addDropShadow(articleCell)
                 return articleCell
             }
             
             //display loading indicator
             var loadingCell = collectionView.dequeueReusableCellWithReuseIdentifier("loadingCell", forIndexPath: indexPath) as! UICollectionViewCell
+            
+            addDropShadow(loadingCell)
             return loadingCell
         }
 
@@ -121,7 +157,15 @@ extension MainViewController: UICollectionViewDataSource {
         
         articleCell.descr = article.descrWithoutHTML
         
+        addDropShadow(articleCell)
         return articleCell
+    }
+    
+    func addDropShadow(view : UIView) {
+        view.layer.shadowOffset = CGSize(width: 0, height: 2)
+        view.layer.shadowOpacity = 1
+        view.layer.shadowRadius = 2
+        view.layer.masksToBounds = false
     }
 
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {

@@ -15,12 +15,22 @@ class ArticleViewCell: UICollectionViewCell {
     
     var title = "Title" {
         didSet {
+            // set correct font
+            let titleFontSize = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline).pointSize
+            let titleFont = UIFont(name: DICClient.Constants.fontName, size: titleFontSize)
+            titleLabel.font = titleFont
+            
             titleLabel.text = title
         }
     }
     
     var descr = "Descr" {
         didSet {
+            // set correct font
+            let descrFontSize = UIFont.preferredFontForTextStyle(UIFontTextStyleCaption1).pointSize
+            let descrFont = UIFont(name: DICClient.Constants.fontName, size: descrFontSize)
+            descrLabel.font = descrFont
+            
             descrLabel.text = descr
         }
     }

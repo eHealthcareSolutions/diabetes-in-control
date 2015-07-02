@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DICArticle: NSObject {
+class DICArticle: NSObject, NSCoding {
 
     var title : String
     var link : String
@@ -26,6 +26,24 @@ class DICArticle: NSObject {
                                      .stringByReplacingOccurrencesOfString("&#160;", withString: " ", options: .RegularExpressionSearch, range: nil)
                                      .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         self.content = content
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        title = aDecoder.decodeObjectForKey("title") as! String
+        link = aDecoder.decodeObjectForKey("link") as! String
+        category = aDecoder.decodeObjectForKey("category") as! String
+        descr = aDecoder.decodeObjectForKey("descr") as! String
+        descrWithoutHTML = aDecoder.decodeObjectForKey("descrWithoutHTML") as! String
+        content = aDecoder.decodeObjectForKey("content") as! String
+    }
+    
+    func encodeWithCoder(aCoder : NSCoder) {
+        aCoder.encodeObject(title, forKey: "title")
+        aCoder.encodeObject(link, forKey: "link")
+        aCoder.encodeObject(category, forKey: "category")
+        aCoder.encodeObject(descr, forKey: "descr")
+        aCoder.encodeObject(descrWithoutHTML, forKey: "descrWithoutHTML")
+        aCoder.encodeObject(content, forKey: "content")
     }
     
     // toString function, don't confuse this with descr, the article description

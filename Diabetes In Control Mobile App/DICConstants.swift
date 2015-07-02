@@ -12,6 +12,7 @@ extension DICClient {
     
     struct Constants {
         static let baseUrl = "http://ec2-184-73-33-13.compute-1.amazonaws.com/html/diabetesincontrol-dev.com/category/articles"
+        static let favoritesURL = "favorites.archive"
         static let feed = "/feed/"
         static let paged = "?paged="
         
@@ -20,6 +21,8 @@ extension DICClient {
         static let categoryUrls = ["/case-study", "/clinical-gems","/did-you-know", "/practicum", "/exclusive", "/facts", "/feature", "/homerun-slides", "/how-glp-1-works", "/diabetes-news", "/newsflash", "/press-releases", "/product-of-the-week", "/this-weeks-study", "/videos"]
         
         static let articlesPerPage = 5
+        
+        static let fontName = "OpenSans"
     }
     
 }

@@ -79,7 +79,6 @@ class DICXMLParser: NSObject, NSXMLParserDelegate {
     
     // callback to the delegate with our articles
     func parserDidEndDocument(parser: NSXMLParser) {
-        parser.abortParsing()
         delegate?.articlesDidFinishLoading(articles)
         abortAndReset()
     }

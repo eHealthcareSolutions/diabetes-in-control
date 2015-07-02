@@ -11,8 +11,11 @@ import UIKit
 class ArticleViewController: UIViewController {
 
     @IBOutlet weak var mainArticleLabel: UILabel!
+    @IBOutlet weak var favoriteButton: UIBarButtonItem!
     
     var article : DICArticle!
+    var isFavorite : Bool = false
+    var favorites : DICFavoritesList!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +29,24 @@ class ArticleViewController: UIViewController {
             options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
             documentAttributes: nil, error: nil)!
         mainArticleLabel.attributedText = contentAsAttributedString
+        
+        favorites = DICFavoritesList.sharedInstance()
+        if favorites.findFavoriteWithTitle(article.title) {
+            favoriteButton.image = UIImage(named: "Favorite Selected")
+            isFavorite = true
+        }
     }
     
+    @IBAction func touchUpFavoriteButton(sender: UIBarButtonItem) {
+        isFavorite = !isFavorite
+        
+        if isFavorite {
+            sender.image = UIImage(named: "Favorite Selected")
+            favorites.addFavorite(article)
+        }
+        else {
+            sender.image = UIImage(named: "Favorite")
+            favorites.removeFavorite(article)
+        }
+    }
 }
