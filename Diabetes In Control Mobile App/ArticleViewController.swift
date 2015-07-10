@@ -25,9 +25,14 @@ class ArticleViewController: UIViewController {
         
         // update labels to reflect the article we're supposed to show
         // article field should be set by now
-        let contentAsAttributedString = NSAttributedString(data: article.content.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
-            options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
-            documentAttributes: nil, error: nil)!
+        let font = UIFont(name: DICConstants.fontName, size: 16)
+        let contentAsAttributedString = NSMutableAttributedString(data: article.content.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
+            options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil, error: nil)!
+       
+        println(contentAsAttributedString)
+        //contentAsAttributedString.setAttributes([NSFontAttributeName : font!], range: NSMakeRange(0, contentAsAttributedString.length))
+        //let fontAttr = contentAsAttributedString.attribute(NSFontAttributeName, atIndex: 0, effectiveRange: nil)
+
         mainArticleLabel.attributedText = contentAsAttributedString
         
         favorites = DICFavoritesList.sharedInstance()

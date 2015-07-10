@@ -10,6 +10,7 @@ import UIKit
 
 class MainViewController: UIViewController {
 
+    @IBOutlet weak var dicLogo: UIImageView!
     @IBOutlet weak var topicScrollView: UIScrollView!
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -19,8 +20,12 @@ class MainViewController: UIViewController {
     @IBOutlet weak var btnPopular: UIButton!
     @IBOutlet var btnCategories: [UIButton]!
     
+    var tileHorizMargin : CGFloat = 10
+    var tileVertMargin : CGFloat = 20
+    
     var articles = [DICArticle]()
     var loadingNewArticles = false
+    var isSegueing = false
     var noArticlesLeft = false // at the bottom of infinite scroll
     var category : String = "" // current category
     var articleToShow: DICArticle? // holds the article that was just clicked on so we can give it to the article view controller
@@ -35,7 +40,7 @@ class MainViewController: UIViewController {
         // update button names to reflect those in DICConstants
         // add padding so buttons aren't squished together
         let padding = "\t"
-        let categories = DICClient.Constants.categories
+        let categories = DICConstants.URLConvenience.categories
         for i in 0..<categories.count{
             btnCategories[i].setTitle(padding + categories[i] + padding, forState: .Normal)
         }
@@ -43,6 +48,10 @@ class MainViewController: UIViewController {
         btnHome.setTitle(padding + btnHome.titleForState(.Normal)! + padding, forState: .Normal)
         btnFavorites.setTitle(padding + btnFavorites.titleForState(.Normal)! + padding, forState: .Normal)
         btnPopular.setTitle(padding + btnPopular.titleForState(.Normal)! + padding, forState: .Normal)
+        
+        //set margins for tiles in collectionview
+        let flowLayout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        flowLayout.sectionInset = UIEdgeInsetsMake(tileVertMargin, tileHorizMargin, tileVertMargin, tileHorizMargin)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -51,12 +60,16 @@ class MainViewController: UIViewController {
             articles = []
             articlesDidFinishLoading(DICFavoritesList.sharedInstance().articles)
         }
+        collectionView.reloadData()
+        
+        // no longer segueing
+        isSegueing = false
     }
     
     override func viewDidAppear(animated: Bool) {
         // update buttons with correct font size
         let btnFontSize = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline).pointSize
-        let btnFont = UIFont(name: DICClient.Constants.fontName, size: btnFontSize)
+        let btnFont = UIFont(name: DICConstants.fontName, size: btnFontSize)
         for i in 0..<btnCategories.count {
             btnCategories[i].titleLabel!.font = btnFont
         }
@@ -64,10 +77,13 @@ class MainViewController: UIViewController {
         btnFavorites.titleLabel!.font = btnFont
         btnPopular.titleLabel!.font = btnFont
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        if toInterfaceOrientation == UIInterfaceOrientation.Portrait {
+            dicLogo.image = UIImage(named: "DICLogo_KO_Portrait")
+        } else {
+            dicLogo.image = UIImage(named: "DICLogo_KO_Landscape")
+        }
     }
     
     // loads new articles to display in collection view
@@ -129,7 +145,7 @@ extension MainViewController: UICollectionViewDataSource {
             }
             
             if !loadingNewArticles && !noArticlesLeft { //start loading new articles
-                var pageToLoad = articles.count / DICClient.Constants.articlesPerPage + 1
+                var pageToLoad = articles.count / DICConstants.articlesPerPage + 1
                 loadNewArticles(category: self.category, page : pageToLoad)
             }
             else if noArticlesLeft { //say that
@@ -162,10 +178,11 @@ extension MainViewController: UICollectionViewDataSource {
     }
     
     func addDropShadow(view : UIView) {
-        view.layer.shadowOffset = CGSize(width: 0, height: 2)
-        view.layer.shadowOpacity = 1
-        view.layer.shadowRadius = 2
-        view.layer.masksToBounds = false
+        let CS = DICConstants.CellShadow.self
+        view.layer.shadowOffset = CS.offset
+        view.layer.shadowOpacity = CS.opacity
+        view.layer.shadowRadius = CS.radius
+        view.layer.masksToBounds = CS.masksToBounds
     }
 
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -183,10 +200,34 @@ extension MainViewController: UICollectionViewDataSource {
 extension MainViewController: UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if articles.count != 0 && indexPath.row < articles.count { //if we're not currently loading
-            articleToShow = articles[indexPath.row]
-            performSegueWithIdentifier("showArticleViewController", sender: self)
+        if !isSegueing {
+            self.isSegueing = true
+            
+            // set selected color
+            self.collectionView(collectionView, didHighlightItemAtIndexPath: indexPath)
+            
+            if articles.count != 0 && indexPath.row < articles.count { //if we're not currently loading
+                articleToShow = articles[indexPath.row]
+                performSegueWithIdentifier("showArticleViewController", sender: self)
+            }
         }
+    }
+    
+    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+        // set unselected color
+        self.collectionView(collectionView, didUnhighlightItemAtIndexPath: indexPath)
+    }
+    
+    func collectionView(collectionView: UICollectionView, didHighlightItemAtIndexPath indexPath: NSIndexPath) {
+        // set selected color
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as? ArticleViewCell
+        cell?.backgroundColor = DICConstants.cellSelectedColor
+    }
+    
+    func collectionView(collectionView: UICollectionView, didUnhighlightItemAtIndexPath indexPath: NSIndexPath) {
+        // set unselected color
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as? ArticleViewCell
+        cell?.backgroundColor = DICConstants.cellUnselectedColor
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

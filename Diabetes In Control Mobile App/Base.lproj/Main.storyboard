@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Gka-YZ-HJH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Gka-YZ-HJH">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -44,7 +44,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Ijk-Ya-eRV">
-                                <rect key="frame" x="16" y="333" width="568" height="259"/>
+                                <rect key="frame" x="16" y="275" width="568" height="317"/>
                                 <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="sP4-Lu-bVc">
                                     <size key="itemSize" width="288" height="130"/>
@@ -382,19 +382,33 @@
                                     </mask>
                                 </variation>
                             </scrollView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DICLogo_KO_Portrait" translatesAutoresizingMaskIntoConstraints="NO" id="3hz-1d-nnR">
+                                <rect key="frame" x="16" y="72" width="568" height="203"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.18431372549019609" green="0.41176470588235292" blue="0.20392156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Ijk-Ya-eRV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="578-EB-X9P"/>
+                            <constraint firstAttribute="centerX" secondItem="3hz-1d-nnR" secondAttribute="centerX" id="GGD-aV-BfH"/>
+                            <constraint firstItem="3hz-1d-nnR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="IPA-HA-PQj"/>
                             <constraint firstAttribute="centerX" secondItem="Ijk-Ya-eRV" secondAttribute="centerX" id="IUO-6S-sNa"/>
                             <constraint firstItem="Ijk-Ya-eRV" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Ken-LD-UZl"/>
                             <constraint firstItem="Ijk-Ya-eRV" firstAttribute="top" secondItem="3x6-Q4-hKO" secondAttribute="bottom" constant="8" symbolic="YES" id="Ovu-YJ-YEA"/>
+                            <constraint firstItem="fbT-Mm-Q2Z" firstAttribute="top" secondItem="3hz-1d-nnR" secondAttribute="bottom" id="PZZ-uZ-xTT"/>
                             <constraint firstAttribute="centerY" secondItem="3x6-Q4-hKO" secondAttribute="centerY" id="Phb-Wv-wan"/>
                             <constraint firstItem="3x6-Q4-hKO" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="RgN-fB-ZVa"/>
+                            <constraint firstItem="3hz-1d-nnR" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="VCT-Py-8dm"/>
+                            <constraint firstItem="Ijk-Ya-eRV" firstAttribute="top" secondItem="3x6-Q4-hKO" secondAttribute="top" id="X35-fj-gdS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="3x6-Q4-hKO" secondAttribute="trailing" id="qAd-RS-GW8"/>
                             <constraint firstAttribute="centerX" secondItem="3x6-Q4-hKO" secondAttribute="centerX" id="qLx-e5-AuN"/>
+                            <constraint firstItem="3hz-1d-nnR" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="uEI-uI-Iub"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ijk-Ya-eRV" secondAttribute="bottom" constant="8" symbolic="YES" id="zm2-qk-Qed"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Ovu-YJ-YEA"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Diabetes In Control" id="X1r-Jb-MOO"/>
                     <connections>
@@ -402,6 +416,7 @@
                         <outlet property="btnHome" destination="Agm-nd-z87" id="1q1-VK-dja"/>
                         <outlet property="btnPopular" destination="Ywo-o3-mBu" id="yzi-Dd-Avz"/>
                         <outlet property="collectionView" destination="Ijk-Ya-eRV" id="3bM-Rm-t5p"/>
+                        <outlet property="dicLogo" destination="3hz-1d-nnR" id="feI-Ly-pmr"/>
                         <outlet property="topicScrollView" destination="3x6-Q4-hKO" id="tGb-oe-EDm"/>
                         <outletCollection property="btnCategories" destination="fvP-Zo-gTv" collectionClass="NSMutableArray" id="J5j-kL-hUj"/>
                         <outletCollection property="btnCategories" destination="oyF-aj-8N9" collectionClass="NSMutableArray" id="ssI-DV-rwf"/>
@@ -441,8 +456,8 @@
                                 <rect key="frame" x="16" y="72" width="568" height="476"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="500" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hfc-Dj-ZQf">
-                                        <rect key="frame" x="0.0" y="0.0" width="558" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="558" height="41"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="34"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -503,6 +518,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="DICLogo_KO_Portrait" width="600" height="451"/>
         <image name="Favorite" width="27" height="26"/>
     </resources>
 </document>

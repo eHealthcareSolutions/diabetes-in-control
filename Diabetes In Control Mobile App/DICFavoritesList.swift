@@ -54,7 +54,7 @@ class DICFavoritesList : NSObject {
         let dirPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         
         let docsDir = dirPaths[0] as! String
-        var dataFilePath = docsDir.stringByAppendingPathComponent(DICClient.Constants.favoritesURL)
+        var dataFilePath = docsDir.stringByAppendingPathComponent(DICConstants.URLConvenience.favoritesURL)
         return dataFilePath
     }
     

@@ -34,14 +34,15 @@ class DICClient: NSObject {
         
         // create url request from feed url (DICConstants.swift)
         var url : NSURL?
+        let UC = DICConstants.URLConvenience.self
         if category == "" { //want main article feed
-            url = NSURL(string: Constants.baseUrl + Constants.feed + Constants.paged + String(page))
+            url = NSURL(string: UC.baseUrl + UC.feed + UC.paged + String(page))
         } else {
             var categoryUrl = "" // if we can't find the category url, just get main feed
-            if let categoryIndex = find(Constants.categories,category) {
-                categoryUrl = Constants.categoryUrls[categoryIndex]
+            if let categoryIndex = find(UC.categories,category) {
+                categoryUrl = UC.categoryUrls[categoryIndex]
             }
-            url = NSURL(string: Constants.baseUrl + categoryUrl + Constants.feed + Constants.paged + String(page))
+            url = NSURL(string: UC.baseUrl + categoryUrl + UC.feed + UC.paged + String(page))
         }
         println("Page=\(page)")
         let request = NSURLRequest(URL: url!)

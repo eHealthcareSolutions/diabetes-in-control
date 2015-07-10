@@ -17,7 +17,7 @@ class ArticleViewCell: UICollectionViewCell {
         didSet {
             // set correct font
             let titleFontSize = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline).pointSize
-            let titleFont = UIFont(name: DICClient.Constants.fontName, size: titleFontSize)
+            let titleFont = UIFont(name: DICConstants.fontName, size: titleFontSize)
             titleLabel.font = titleFont
             
             titleLabel.text = title
@@ -28,11 +28,14 @@ class ArticleViewCell: UICollectionViewCell {
         didSet {
             // set correct font
             let descrFontSize = UIFont.preferredFontForTextStyle(UIFontTextStyleCaption1).pointSize
-            let descrFont = UIFont(name: DICClient.Constants.fontName, size: descrFontSize)
+            let descrFont = UIFont(name: DICConstants.fontName, size: descrFontSize)
             descrLabel.font = descrFont
             
             descrLabel.text = descr
         }
     }
     
+    override func prepareForReuse() {
+        self.backgroundColor = DICConstants.cellUnselectedColor
+    }
 }
