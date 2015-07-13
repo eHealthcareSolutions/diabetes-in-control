@@ -10,6 +10,7 @@ import Foundation
 
 class DICArticle: NSObject, NSCoding {
 
+    // article data
     var title : String
     var link : String
     var category : String
@@ -22,12 +23,14 @@ class DICArticle: NSObject, NSCoding {
         self.link = link
         self.category = category
         self.descr = descr
+        // remove html tags and encodings, trim whitespace
         self.descrWithoutHTML = descr.stringByReplacingOccurrencesOfString("<[^>]+>", withString: "", options: .RegularExpressionSearch, range: nil)
                                      .stringByReplacingOccurrencesOfString("&#160;", withString: " ", options: .RegularExpressionSearch, range: nil)
                                      .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         self.content = content
     }
     
+    // init from the cache
     required init(coder aDecoder: NSCoder) {
         title = aDecoder.decodeObjectForKey("title") as! String
         link = aDecoder.decodeObjectForKey("link") as! String
@@ -37,6 +40,7 @@ class DICArticle: NSObject, NSCoding {
         content = aDecoder.decodeObjectForKey("content") as! String
     }
     
+    // store in the cache
     func encodeWithCoder(aCoder : NSCoder) {
         aCoder.encodeObject(title, forKey: "title")
         aCoder.encodeObject(link, forKey: "link")

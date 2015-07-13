@@ -11,6 +11,7 @@
 		0F43BCAF1B3884FD00FD53BF /* DICConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43BCAE1B3884FD00FD53BF /* DICConstants.swift */; };
 		0F43BCB11B3885BC00FD53BF /* DICArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43BCB01B3885BC00FD53BF /* DICArticle.swift */; };
 		0F43BCB51B388A8100FD53BF /* DICXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43BCB41B388A8100FD53BF /* DICXMLParser.swift */; };
+		0F7356571B544452000315F7 /* ScrollViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7356561B544452000315F7 /* ScrollViewFactory.swift */; };
 		0F82C7291B446B2700ECABCD /* DICFavoritesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F82C7281B446B2700ECABCD /* DICFavoritesList.swift */; };
 		0F82C7341B456F1A00ECABCD /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F82C72A1B456F1A00ECABCD /* OpenSans-Bold.ttf */; };
 		0F82C7351B456F1A00ECABCD /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F82C72A1B456F1A00ECABCD /* OpenSans-Bold.ttf */; };
@@ -57,6 +58,7 @@
 		0F43BCAE1B3884FD00FD53BF /* DICConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DICConstants.swift; sourceTree = "<group>"; };
 		0F43BCB01B3885BC00FD53BF /* DICArticle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DICArticle.swift; sourceTree = "<group>"; };
 		0F43BCB41B388A8100FD53BF /* DICXMLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DICXMLParser.swift; sourceTree = "<group>"; };
+		0F7356561B544452000315F7 /* ScrollViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollViewFactory.swift; sourceTree = "<group>"; };
 		0F82C7281B446B2700ECABCD /* DICFavoritesList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DICFavoritesList.swift; sourceTree = "<group>"; };
 		0F82C72A1B456F1A00ECABCD /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		0F82C72B1B456F1A00ECABCD /* OpenSans-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-BoldItalic.ttf"; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				0FC77F6E1B31B88F00C82887 /* ArticleViewCell.swift */,
+				0F7356561B544452000315F7 /* ScrollViewFactory.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				0F43BCAD1B3884E800FD53BF /* DICClient.swift in Sources */,
 				0F43BCB51B388A8100FD53BF /* DICXMLParser.swift in Sources */,
 				0FC77F6F1B31B88F00C82887 /* ArticleViewCell.swift in Sources */,
+				0F7356571B544452000315F7 /* ScrollViewFactory.swift in Sources */,
 				0F43BCAF1B3884FD00FD53BF /* DICConstants.swift in Sources */,
 				0FDE77D31B307B7C009A70A4 /* AppDelegate.swift in Sources */,
 				0F43BCB11B3885BC00FD53BF /* DICArticle.swift in Sources */,

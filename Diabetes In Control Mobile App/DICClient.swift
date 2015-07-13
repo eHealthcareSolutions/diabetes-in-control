@@ -25,13 +25,9 @@ class DICClient: NSObject {
         dicXMLParser.delegate = self
     }
     
+    // given an article category, a page number, and a completion handler, creates an array of articles from 
+    // the rss feed for given category/page number. then calls completionHandler with articles as argument
     func getArticleFeed(category : String = "", page : Int = 1, completionHandler : ([DICArticle] -> ())?) {
-        // if we are already parsing, cancel it to start parsing new request
-        task?.cancel()
-        dicXMLParser.abortAndReset()
-        
-        articlesLoadedCompletionHandler = completionHandler
-        
         // create url request from feed url (DICConstants.swift)
         var url : NSURL?
         let UC = DICConstants.URLConvenience.self
@@ -47,7 +43,19 @@ class DICClient: NSObject {
         println("Page=\(page)")
         let request = NSURLRequest(URL: url!)
         
-        task = session.dataTaskWithRequest(request) {data, response, downloadError in
+        getArticlesFromURLRequest(request, completionHandler: completionHandler)
+    }
+    
+    // given a urlrequest for an xml feed of articles, creates articles array from feed and calls 
+    // completionHandler with articles as argument
+    func getArticlesFromURLRequest(urlRequest : NSURLRequest, completionHandler : ([DICArticle] -> ())?) {
+        // if we are already parsing, cancel it to start parsing new request
+        task?.cancel()
+        dicXMLParser.abortAndReset()
+        
+        articlesLoadedCompletionHandler = completionHandler
+        
+        task = session.dataTaskWithRequest(urlRequest) {data, response, downloadError in
             if let error = downloadError {
                 println(error)
             }
@@ -57,7 +65,7 @@ class DICClient: NSObject {
                 xmlParser.delegate = self.dicXMLParser
                 xmlParser.parse()
                 if xmlParser.parserError?.code == 1 { //internal error, must retry
-                    self.getArticleFeed(category: category, page: page, completionHandler: completionHandler)
+                    self.getArticlesFromURLRequest(urlRequest, completionHandler: completionHandler)
                 }
             }
         }
@@ -65,8 +73,8 @@ class DICClient: NSObject {
         task!.resume()
     }
     
+    // singleton
     class func sharedInstance() -> DICClient {
-        
         struct Singleton {
             static var sharedInstance = DICClient()
         }
@@ -78,9 +86,12 @@ class DICClient: NSObject {
 
 // MARK: DICXMLParserDelegate
 extension DICClient: DICXMLParserDelegate {
+    
+    // when xml parsing is done, call the given completion handler
     func articlesDidFinishLoading(articles : [DICArticle]) {
         if (articlesLoadedCompletionHandler != nil) {
             articlesLoadedCompletionHandler!(articles)
         }
     }
+    
 }

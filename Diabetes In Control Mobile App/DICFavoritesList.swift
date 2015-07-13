@@ -24,11 +24,13 @@ class DICFavoritesList : NSObject {
         }
     }
     
+    // adds fav to list, saves data
     func addFavorite(article : DICArticle) {
         articles += [article]
         saveData()
     }
     
+    // removes fav from list, saves data
     func removeFavorite(article : DICArticle) {
         if let index = find(articles, article) {
             articles.removeAtIndex(index)
@@ -46,6 +48,7 @@ class DICFavoritesList : NSObject {
         return false
     }
     
+    // write favorites list to cache
     func saveData() {
         NSKeyedArchiver.archiveRootObject(articles, toFile: getDataFilePath())
     }
@@ -58,8 +61,8 @@ class DICFavoritesList : NSObject {
         return dataFilePath
     }
     
+    // singleton
     class func sharedInstance() -> DICFavoritesList {
-        
         struct Singleton {
             static var sharedInstance = DICFavoritesList()
         }

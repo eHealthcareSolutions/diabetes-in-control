@@ -12,6 +12,7 @@ class DICXMLParser: NSObject, NSXMLParserDelegate {
 
     var parser : NSXMLParser?
     
+    // add articles to this array as they are parsed
     var articles = [DICArticle]()
     
     // these will fill up as we read each article element
@@ -21,6 +22,12 @@ class DICXMLParser: NSObject, NSXMLParserDelegate {
     var descr = ""
     var content = ""
     
+    // used to determine what element is currently being raad
+    enum CurrentlyReading {
+        case Title, Link, Category, Descr, Content, None
+    }
+    
+    // stores the element we are currently reading
     var currentlyReading = CurrentlyReading.None
     
     //will call this delegate when we finish loading the articles
@@ -83,11 +90,13 @@ class DICXMLParser: NSObject, NSXMLParserDelegate {
         abortAndReset()
     }
     
+    // error handler
     func parser(parser: NSXMLParser, parseErrorOccurred parseError: NSError) {
         //println(parseError)
         println("Error parsing XML")
     }
     
+    // stop parsing and return to original, ready-to-parse state
     func abortAndReset() {
         parser?.abortParsing()
         
@@ -101,13 +110,9 @@ class DICXMLParser: NSObject, NSXMLParserDelegate {
         currentlyReading = .None
     }
     
-    // used to determine what element is currently being raad
-    enum CurrentlyReading {
-        case Title, Link, Category, Descr, Content, None
-    }
-    
 }
 
+// objects that use DICXMLParser must implement this protocol and provide a completion handler
 protocol DICXMLParserDelegate {
     func articlesDidFinishLoading([DICArticle])
 }

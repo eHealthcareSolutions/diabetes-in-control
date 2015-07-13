@@ -13,13 +13,16 @@ struct DICConstants {
         
     static let articlesPerPage = 5
     static let fontName = "OpenSans"
-    static let cellSelectedColor = UIColor(red: 1.0, green: 1.0, blue: 0.847, alpha: 1.0)
-    static let cellUnselectedColor = UIColor.whiteColor()
+    
+    static let selectedTopicFontColor = UIColor(red: 1.0, green: 1.0, blue: 0.66, alpha: 1.0)
+    static let unselectedTopicFontColor = UIColor.whiteColor()
     
     struct URLConvenience {
         static let baseUrl = "http://ec2-184-73-33-13.compute-1.amazonaws.com/html/diabetesincontrol-dev.com/category/articles"
+        static let articlesUrl = "http://ec2-184-73-33-13.compute-1.amazonaws.com/html/diabetesincontrol-dev.com/articles"
         static let favoritesURL = "favorites.archive"
         static let feed = "/feed/"
+        static let feedSingleArticle = "feed/?withoutcomments=1"
         static let paged = "?paged="
         
         // these must be parallel arrays and not dictionaries because dictionaries aren't ordered

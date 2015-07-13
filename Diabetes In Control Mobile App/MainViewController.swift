@@ -19,6 +19,8 @@ class MainViewController: UIViewController {
     @IBOutlet weak var btnFavorites: UIButton!
     @IBOutlet weak var btnPopular: UIButton!
     @IBOutlet var btnCategories: [UIButton]!
+
+    var currentlySelectedBtn: UIButton!
     
     var tileHorizMargin : CGFloat = 10
     var tileVertMargin : CGFloat = 20
@@ -52,6 +54,13 @@ class MainViewController: UIViewController {
         //set margins for tiles in collectionview
         let flowLayout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         flowLayout.sectionInset = UIEdgeInsetsMake(tileVertMargin, tileHorizMargin, tileVertMargin, tileHorizMargin)
+        
+        // set currently selected button color
+        currentlySelectedBtn = btnHome
+        selectButton(btnHome)
+        
+        //let f = ScrollViewFactory(topicScrollView)
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -78,6 +87,7 @@ class MainViewController: UIViewController {
         btnPopular.titleLabel!.font = btnFont
     }
     
+    // change logo to the correct one for the given orientation
     override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
         if toInterfaceOrientation == UIInterfaceOrientation.Portrait {
             dicLogo.image = UIImage(named: "DICLogo_KO_Portrait")
@@ -89,7 +99,7 @@ class MainViewController: UIViewController {
     // loads new articles to display in collection view
     func loadNewArticles(category : String = "", page : Int = 1) {
         self.category = category
-        if loadingNewArticles { // already loading
+        if loadingNewArticles { // already loading, do nothing
             return
         }
         // otherwise start loading articles
@@ -99,7 +109,7 @@ class MainViewController: UIViewController {
         }
     }
 
-    // called when a button is pressed
+    // called when a button is pressed, load new articles for the selected category
     @IBAction func touchUpInside(sender: UIButton) {
         loadingNewArticles = false
         noArticlesLeft = false
@@ -118,6 +128,24 @@ class MainViewController: UIViewController {
             // get feed for selected category
             loadNewArticles(category: category)
         }
+        
+        selectButton(sender)
+    }
+    
+    func selectButton(btn: UIButton) {
+        // scroll so selected button is in center
+        let margin = (topicScrollView.frame.width - btn.frame.width) / 2
+        // don't care about height
+        let visibleRect = CGRect(x: btn.frame.origin.x - margin, y: 1, width: topicScrollView.frame.width, height: 1)
+        topicScrollView.scrollRectToVisible(visibleRect, animated: true)
+        
+        // unhighlight previous button
+        currentlySelectedBtn.setTitleColor(DICConstants.unselectedTopicFontColor, forState: .Normal)
+        
+        // highlight selected category
+        btn.setTitleColor(DICConstants.selectedTopicFontColor, forState: .Normal)
+        
+        currentlySelectedBtn = btn
     }
     
     // function to be called when articles are finished loading
@@ -128,10 +156,47 @@ class MainViewController: UIViewController {
                 self.noArticlesLeft = true
             }
             self.articles += articles
-            self.collectionView.reloadData()
-            self.loadingNewArticles = false
+            self.collectionView.reloadData() // display new articles
+            self.loadingNewArticles = false // done loading
         }
     }
+    
+    // simulate touching button to the left of the currently selected button
+    @IBAction func leftArrowTouchUpInside(sender: UIButton) {
+        let btn = currentlySelectedBtn
+        if btn == btnHome {
+            // do nothing, can't go left further
+            return
+        } else if btn == btnFavorites {
+            touchUpInside(btnHome)
+        } else if btn == btnPopular {
+            touchUpInside(btnFavorites)
+        } else if btn == btnCategories[0] {
+            touchUpInside(btnPopular)
+        } else {
+            let index = find(btnCategories, btn)
+            touchUpInside(btnCategories[index!-1])
+        }
+    }
+    
+    // simulate touching button to the right of the currently selected button
+    @IBAction func rightArrowTouchUpInside(sender: UIButton) {
+        let btn = currentlySelectedBtn
+        if btn == btnCategories[btnCategories.count-1] {
+            // do nothing, can't go right further
+            return
+        } else if btn == btnHome {
+            touchUpInside(btnFavorites)
+        } else if btn == btnFavorites {
+            touchUpInside(btnPopular)
+        } else if btn == btnPopular {
+            touchUpInside(btnCategories[0])
+        } else {
+            let index = find(btnCategories, btn)
+            touchUpInside((btnCategories[index!+1]))
+        }
+    }
+
     
 }
 
@@ -145,10 +210,10 @@ extension MainViewController: UICollectionViewDataSource {
             }
             
             if !loadingNewArticles && !noArticlesLeft { //start loading new articles
-                var pageToLoad = articles.count / DICConstants.articlesPerPage + 1
+                var pageToLoad = articles.count / DICConstants.articlesPerPage + 1 // next page
                 loadNewArticles(category: self.category, page : pageToLoad)
             }
-            else if noArticlesLeft { //say that
+            else if noArticlesLeft { // notify user
                 // using an article cell for now, that may change
                 var articleCell = collectionView.dequeueReusableCellWithReuseIdentifier("articleViewCell", forIndexPath: indexPath) as! ArticleViewCell
                 articleCell.title = "No more articles to display!"
@@ -165,7 +230,7 @@ extension MainViewController: UICollectionViewDataSource {
             return loadingCell
         }
 
-        // otherwise, show articles normally
+        // otherwise, show articles normally by getting new cell and populating it with data
         var articleCell = collectionView.dequeueReusableCellWithReuseIdentifier("articleViewCell", forIndexPath: indexPath) as! ArticleViewCell
         
         let article = articles[indexPath.row]
@@ -177,6 +242,7 @@ extension MainViewController: UICollectionViewDataSource {
         return articleCell
     }
     
+    // add drop shadow to given view
     func addDropShadow(view : UIView) {
         let CS = DICConstants.CellShadow.self
         view.layer.shadowOffset = CS.offset
@@ -186,7 +252,7 @@ extension MainViewController: UICollectionViewDataSource {
     }
 
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 1 // for now
+        return 1 // for now, we only have one section
     }
 
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -200,13 +266,15 @@ extension MainViewController: UICollectionViewDataSource {
 extension MainViewController: UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if !isSegueing {
+        if !isSegueing { // only segue if we are not segueing already
             self.isSegueing = true
             
             // set selected color
-            self.collectionView(collectionView, didHighlightItemAtIndexPath: indexPath)
+            let cell = collectionView.cellForItemAtIndexPath(indexPath) as? ArticleViewCell
+            cell?.setSelected()
             
-            if articles.count != 0 && indexPath.row < articles.count { //if we're not currently loading
+            if articles.count != 0 && indexPath.row < articles.count { // if we're not currently loading
+                // get article to show and segue to it
                 articleToShow = articles[indexPath.row]
                 performSegueWithIdentifier("showArticleViewController", sender: self)
             }
@@ -215,21 +283,11 @@ extension MainViewController: UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
         // set unselected color
-        self.collectionView(collectionView, didUnhighlightItemAtIndexPath: indexPath)
-    }
-    
-    func collectionView(collectionView: UICollectionView, didHighlightItemAtIndexPath indexPath: NSIndexPath) {
-        // set selected color
         let cell = collectionView.cellForItemAtIndexPath(indexPath) as? ArticleViewCell
-        cell?.backgroundColor = DICConstants.cellSelectedColor
+        cell?.setUnselected()
     }
     
-    func collectionView(collectionView: UICollectionView, didUnhighlightItemAtIndexPath indexPath: NSIndexPath) {
-        // set unselected color
-        let cell = collectionView.cellForItemAtIndexPath(indexPath) as? ArticleViewCell
-        cell?.backgroundColor = DICConstants.cellUnselectedColor
-    }
-    
+    // provides article to show to the article view controller
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let articleVC = segue.destinationViewController as? ArticleViewController
         if articleToShow != nil {
