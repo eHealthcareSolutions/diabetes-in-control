@@ -40,7 +40,6 @@ class DICClient: NSObject {
             }
             url = NSURL(string: UC.baseUrl + categoryUrl + UC.feed + UC.paged + String(page))
         }
-        println("Page=\(page)")
         let request = NSURLRequest(URL: url!)
         
         getArticlesFromURLRequest(request, completionHandler: completionHandler)

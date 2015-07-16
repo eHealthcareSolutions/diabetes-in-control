@@ -9,32 +9,32 @@
 
 import Foundation
 
-class DICFavoritesList : NSObject {
+class DICFavoritesList {
     
-    var articles = [DICArticle]()
+    var articles : [DICArticle]
+    let archiver : DICArchiver
     
-    override init() {
-        super.init()
+    init() {
+        archiver = DICArchiver(archiveName: DICConstants.URLConvenience.favoritesURL)
         
-        let dataFilePath = getDataFilePath()
-        let fileManager = NSFileManager.defaultManager()
-        if fileManager.fileExistsAtPath(dataFilePath) {
-            // if archive exists, get favorites, otherwise we have no favorites
-            articles = NSKeyedUnarchiver.unarchiveObjectWithFile(dataFilePath) as! [DICArticle]
-        }
+        let unarchived = archiver.unarchive() as? [DICArticle]
+        // set articles to unarchived if not nil, otherwise create new array
+        articles = unarchived == nil ? [DICArticle]() : unarchived!
     }
     
     // adds fav to list, saves data
     func addFavorite(article : DICArticle) {
-        articles += [article]
-        saveData()
+        if !findFavoriteWithTitle(article.title) { // only add favorite if it's not already one
+            articles += [article]
+            archiver.archive(articles)
+        }
     }
     
     // removes fav from list, saves data
     func removeFavorite(article : DICArticle) {
         if let index = find(articles, article) {
             articles.removeAtIndex(index)
-            saveData()
+            archiver.archive(articles)
         }
     }
     
@@ -46,19 +46,6 @@ class DICFavoritesList : NSObject {
             }
         }
         return false
-    }
-    
-    // write favorites list to cache
-    func saveData() {
-        NSKeyedArchiver.archiveRootObject(articles, toFile: getDataFilePath())
-    }
-    
-    func getDataFilePath() -> String {
-        let dirPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        
-        let docsDir = dirPaths[0] as! String
-        var dataFilePath = docsDir.stringByAppendingPathComponent(DICConstants.URLConvenience.favoritesURL)
-        return dataFilePath
     }
     
     // singleton

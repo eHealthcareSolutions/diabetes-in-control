@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class DICArticle: NSObject, NSCoding {
 
@@ -17,17 +18,25 @@ class DICArticle: NSObject, NSCoding {
     var descr : String
     var descrWithoutHTML : String
     var content : String
+    var image : UIImage?
     
     init(title : String, link : String, category : String,descr : String, content : String) {
-        self.title = title
+        self.title = title.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         self.link = link
         self.category = category
         self.descr = descr
+        
         // remove html tags and encodings, trim whitespace
-        self.descrWithoutHTML = descr.stringByReplacingOccurrencesOfString("<[^>]+>", withString: "", options: .RegularExpressionSearch, range: nil)
-                                     .stringByReplacingOccurrencesOfString("&#160;", withString: " ", options: .RegularExpressionSearch, range: nil)
-                                     .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        let encodedString = descr.stringByReplacingOccurrencesOfString("<[^>]+>", withString: "", options: .RegularExpressionSearch, range: nil)
+        let encodedData = encodedString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
+        let attributedOptions = [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute: NSUTF8StringEncoding]
+        let attributedString = NSAttributedString(data: encodedData, options: attributedOptions as [NSObject : AnyObject], documentAttributes: nil, error: nil)
+        self.descrWithoutHTML = attributedString!.string.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        
         self.content = content
+        super.init()
+        
+        getImage()
     }
     
     // init from the cache
@@ -38,6 +47,7 @@ class DICArticle: NSObject, NSCoding {
         descr = aDecoder.decodeObjectForKey("descr") as! String
         descrWithoutHTML = aDecoder.decodeObjectForKey("descrWithoutHTML") as! String
         content = aDecoder.decodeObjectForKey("content") as! String
+        image = aDecoder.decodeObjectForKey("image") as? UIImage
     }
     
     // store in the cache
@@ -48,6 +58,17 @@ class DICArticle: NSObject, NSCoding {
         aCoder.encodeObject(descr, forKey: "descr")
         aCoder.encodeObject(descrWithoutHTML, forKey: "descrWithoutHTML")
         aCoder.encodeObject(content, forKey: "content")
+        aCoder.encodeObject(image, forKey: "image")
+    }
+    
+    func getImage() {
+        let attrStr = NSAttributedString(data: descr.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!,
+            options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
+            documentAttributes: nil, error: nil)!
+        // check if it contains an image attachment, if so get the image
+        if let attachment = attrStr.attribute("NSAttachment", atIndex: 0, effectiveRange: nil) as? NSTextAttachment {
+            self.image = UIImage(data: attachment.fileWrapper!.regularFileContents!)
+        }
     }
     
     // toString function, don't confuse this with descr, the article description
