@@ -66,9 +66,9 @@ class DICArticle: NSObject, NSCoding {
             options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
             documentAttributes: nil, error: nil)!
         // check if it contains an image attachment, if so get the image
-        if let attachment = attrStr.attribute("NSAttachment", atIndex: 0, effectiveRange: nil) as? NSTextAttachment {
-            self.image = UIImage(data: attachment.fileWrapper!.regularFileContents!)
-        }
+        //if let attachment = attrStr.attribute("NSAttachment", atIndex: 0, effectiveRange: nil) as? NSTextAttachment {
+        //    self.image = UIImage(data: attachment.fileWrapper!.regularFileContents!)
+        //}
     }
     
     // toString function, don't confuse this with descr, the article description

@@ -34,6 +34,9 @@ class ArticleViewController: UIViewController {
             favoriteButton.image = UIImage(named: "Favorite Selected")
             isFavorite = true
         }
+        
+        // show navigation bar
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     @IBAction func touchUpFavoriteButton(sender: UIBarButtonItem) {
@@ -66,11 +69,13 @@ extension ArticleViewController: UIWebViewDelegate {
                     let urlRequest = NSURLRequest(URL: NSURL(string: urlString)!)
                     DICClient.sharedInstance().getArticlesFromURLRequest(urlRequest) { articles in
                         dispatch_async(dispatch_get_main_queue()) {
-                            // create an article view controller from storyboard, give it the article to show, then push it to the nav controller
-                            let articleVC = self.storyboard?.instantiateViewControllerWithIdentifier("ArticleViewController") as! ArticleViewController
-                            let articleToShow = articles[0] // articles array should only have one article in it
-                            articleVC.article = articleToShow
-                            self.navigationController?.pushViewController(articleVC, animated: true)
+                            if articles.count > 0 {
+                                // create an article view controller from storyboard, give it the article to show, then push it to the nav controller
+                                let articleVC = self.storyboard?.instantiateViewControllerWithIdentifier("ArticleViewController") as! ArticleViewController
+                                let articleToShow = articles[0] // articles array should only have one article in it
+                                articleVC.article = articleToShow
+                                self.navigationController?.pushViewController(articleVC, animated: true)
+                            }
                         }
                     }
                 } else { // just open in safari

@@ -7,34 +7,46 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 class MainViewController: UIViewController {
 
-    @IBOutlet weak var dicLogo: UIImageView!
-    @IBOutlet weak var topicScrollView: UIScrollView!
+    @IBOutlet weak var headerView: HeaderView!
+    @IBOutlet weak var topicScrollView: TopicScrollView!
     @IBOutlet weak var collectionView: UICollectionView!
     var refreshControl: UIRefreshControl = UIRefreshControl()
     
-    var topicButtons = [UIButton]()
-    var currentlySelectedBtn: UIButton!
+    var adLoader : DICAdLoader!
     
-    var articles = [DICArticle]()
-    var articleToShow: DICArticle? // holds the article that was just clicked on so we can give it to the article view controller
+    var menuVC : MenuViewController?
+    var grayView : UIView!
+    
+    var collectionViewData : [NSObject]!
+    var articleToShow : DICArticle? // holds the article that was just clicked on so we can give it to the article view controller
     var noArticlesLeft = false // at the bottom of infinite scroll
     
     var favorites = DICFavoritesList.sharedInstance()
 
-    var category : String = "" // current category
+    var page = 1
+    var category : String = DICConstants.URLConvenience.categories[1] // current category
     
     var loadingNewArticles = false
     var isSegueing = false
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        collectionViewData = [NSObject]()
+        
         // get articles from main feed
         loadNewArticles()
+        
+        // create gray view for graying out screen
+        grayView = UIView(frame: CGRectMake(view.frame.minX, view.frame.minY, max(view.frame.size.width, view.frame.size.height), max(view.frame.size.width, view.frame.size.height)))
+        grayView.backgroundColor = DICConstants.MenuVC.overlayColor
+        grayView.userInteractionEnabled = true
+        let gestureRec = UITapGestureRecognizer(target: self, action: "grayViewTouchUpInside:")
+        grayView.addGestureRecognizer(gestureRec)
         
         //set margins for tiles in collectionview
         let flowLayout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
@@ -44,52 +56,47 @@ class MainViewController: UIViewController {
         // add refresh control to collectionview
         refreshControl.addTarget(self, action: "refresh:", forControlEvents: .ValueChanged)
         collectionView.addSubview(refreshControl)
+        collectionView.alwaysBounceVertical = true
         
-        // add buttons to scrollview
-        let scrollViewFactory = ScrollViewFactory(scrollView: topicScrollView)
+        topicScrollView.topicDelegate = self
+        topicScrollView.setButtons(DICConstants.URLConvenience.categories)
         
-        let categories = DICConstants.URLConvenience.categories
-        for i in 0..<categories.count {
-            let button = scrollViewFactory.addButtonNamed(categories[i])
-            topicButtons.append(button)
-            
-            // add listener
-            button.addTarget(self, action: "topicTouchUpInside:", forControlEvents: .TouchUpInside)
-        }
-        scrollViewFactory.finish()
-        
-        // set currently selected button
-        currentlySelectedBtn = topicButtons[1] // home button
+        adLoader = DICAdLoader(delegate: self, rootViewController: self)
     }
     
     override func viewWillAppear(animated: Bool) {
         // if we're in the favorites, things may have changed when we finish viewing an article. so we have to get favorites again
         if category == "Favorites" {
-            articles = []
+            collectionViewData = []
             articlesDidFinishLoading(DICFavoritesList.sharedInstance().articles)
         }
         collectionView.reloadData()
+        
+        // hide navigation bar
+        navigationController?.setNavigationBarHidden(true, animated: false)
         
         // no longer segueing
         isSegueing = false
         
         // update cell size to get correct number of columns
         updateCellSize()
+        
+        // end article read event 
+        Flurry.endTimedEvent(DICConstants.Flurry.ARTICLE_READ_EVENT, withParameters: nil)
+        
+        // log category viewed event
+        let params = ["Category": category]
+        Flurry.logEvent(DICConstants.Flurry.ARTICLE_READ_EVENT, withParameters: params, timed: true)
     }
     
     override func viewDidAppear(animated: Bool) {
-        // update buttons with correct font size
-        let btnFontSize = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline).pointSize
-        let btnFont = UIFont(name: DICConstants.fontName, size: btnFontSize)
-        for i in 0..<topicButtons.count {
-            topicButtons[i].titleLabel!.font = btnFont
-        }
-        
-        selectButton(currentlySelectedBtn)
+        topicScrollView.update()
     }
     
     override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
         updateCellSize()
+        headerView.update()
+        topicScrollView.update()
     }
     
     func updateCellSize() {
@@ -111,62 +118,23 @@ class MainViewController: UIViewController {
         }
         
         // calc height
-        let cellHeight = screenHeight * DICConstants.Tile.heightPercentage
+        let percent = UIApplication.sharedApplication().statusBarOrientation == .Portrait ? DICConstants.Tile.heightPercentagePortrait : DICConstants.Tile.heightPercentageLandscape
+        let cellHeight = screenHeight * percent
         
         flowLayout.itemSize = CGSize(width: cellWidth, height: cellHeight)
         flowLayout.minimumLineSpacing = DICConstants.Tile.vertMargin
     }
     
     // loads new articles to display in collection view
-    func loadNewArticles(category : String = "", page : Int = 1) {
-        self.category = category
+    func loadNewArticles() {
         if loadingNewArticles { // already loading, do nothing
             return
         }
         // otherwise start loading articles
         loadingNewArticles = true
-        DICClient.sharedInstance().getArticleFeed(category: category, page: page) { articles in
+        DICClient.sharedInstance().getArticleFeed(category, page: page) { articles in
             self.articlesDidFinishLoading(articles)
         }
-    }
-
-    // called when a button is pressed, load new articles for the selected category
-    func topicTouchUpInside(sender: UIButton) {
-        loadingNewArticles = false
-        noArticlesLeft = false
-        // clear current articles and show activity indicator
-        articles = []
-        collectionView.reloadData()
-        
-        //get category, remove padding
-        category = sender.titleForState(UIControlState.Normal)!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        
-        // if category is favorites, get favorites, otherwise loadnewarticles
-        if category == "Favorites" {
-            articlesDidFinishLoading(DICFavoritesList.sharedInstance().articles)
-        }
-        else {
-            // get feed for selected category
-            loadNewArticles(category: category)
-        }
-        
-        selectButton(sender)
-    }
-    
-    func selectButton(btn: UIButton) {
-        // scroll so selected button is in center
-        let margin = (topicScrollView.frame.width - btn.frame.width) / 2
-        // don't care about height
-        let visibleRect = CGRect(x: btn.frame.origin.x - margin, y: 1, width: topicScrollView.frame.width, height: 1)
-        topicScrollView.scrollRectToVisible(visibleRect, animated: true)
-        
-        // unhighlight previous button
-        currentlySelectedBtn.setTitleColor(DICConstants.ScrollView.unselectedColor, forState: .Normal)
-        
-        // highlight selected category
-        btn.setTitleColor(DICConstants.ScrollView.selectedColor, forState: .Normal)
-        
-        currentlySelectedBtn = btn
     }
     
     // function to be called when articles are finished loading
@@ -176,47 +144,113 @@ class MainViewController: UIViewController {
             if articles.count == 0 { // no articles left to display
                 self.noArticlesLeft = true
             }
-            self.articles += articles
+            self.collectionViewData = self.collectionViewData + articles as [NSObject]
             self.collectionView.reloadData() // display new articles
             self.loadingNewArticles = false // done loading
-        }
-        
-        // if we're in the home category, set the newest article
-        
-    }
-    
-    // simulate touching button to the left of the currently selected button
-    @IBAction func leftArrowTouchUpInside(sender: UIButton) {
-        let index = find(topicButtons, currentlySelectedBtn)
-        if index! > 0 { // can safely move left
-            topicTouchUpInside(topicButtons[index!-1])
-        }
-    }
-    
-    // simulate touching button to the right of the currently selected button
-    @IBAction func rightArrowTouchUpInside(sender: UIButton) {
-        let index = find(topicButtons, currentlySelectedBtn)
-        if index! < topicButtons.count-1 { // can safely move left
-            topicTouchUpInside(topicButtons[index!+1])
         }
     }
     
     // simulate touching current topic button
     func refresh(sender: AnyObject) {
-        topicTouchUpInside(currentlySelectedBtn)
+        topicScrollView.tapCurrentButton()
         refreshControl.endRefreshing()
     }
     
-    @IBAction func favoritesTouchUpInside(sender: UIButton) {
-        topicTouchUpInside(topicButtons[0]) // simulate favorite button press
+    @IBAction func menuButtonTouchUpInside(sender: UIButton) {
+        // gray out screen
+        view.addSubview(grayView)
+        
+        // if we already have a menu vc destroy it
+        menuVC?.removeFromParentViewController()
+        
+        menuVC = storyboard?.instantiateViewControllerWithIdentifier("menuViewController") as? MenuViewController
+        menuVC!.delegate = self
+        addChildViewController(menuVC!)
+        view.addSubview(menuVC!.view)
+        view.bringSubviewToFront(menuVC!.view)
+        menuVC!.didMoveToParentViewController(self)
     }
+    
+    @IBAction func favoritesTouchUpInside(sender: UIButton) {
+        topicScrollView.tapFavorites() // simulate favorite button press
+    }
+
+    func grayViewTouchUpInside(sender: UITapGestureRecognizer) {
+        menuVC!.hide()
+    }
+    
+}
+
+// MARK: DICAdLoaderDelegate 
+extension MainViewController: DICAdLoaderDelegate {
+    
+    func didReceiveInstallAds(installAds: [GADNativeCustomTemplateAd]) {
+        collectionViewData.append(installAds)
+        collectionView.reloadData()
+    }
+    
+}
+
+// MARK: TopicScrollViewDelegate
+extension MainViewController: TopicScrollViewDelegate {
+    
+    func buttonPressed(named : String) {
+        // end previous category viewed event
+        Flurry.endTimedEvent(DICConstants.Flurry.CATEGORY_VIEWED_EVENT, withParameters: nil)
+        
+        category = named
+        page = 1
+        
+        loadingNewArticles = false
+        noArticlesLeft = false
+        // clear current articles and show activity indicator
+        collectionViewData = []
+        collectionView.reloadData()
+        
+        // log category viewed event
+        let params = ["Category": category]
+        Flurry.logEvent(DICConstants.Flurry.ARTICLE_READ_EVENT, withParameters: params, timed: true)
+        
+        // if category is favorites, get favorites, otherwise loadnewarticles
+        if category == "Favorites" {
+            articlesDidFinishLoading(DICFavoritesList.sharedInstance().articles)
+        }
+        else {
+            // get feed for selected category
+            loadNewArticles()
+        }
+        
+    }
+    
+}
+
+// MARK: MenuViewControllerDelegate 
+extension MainViewController: MenuViewControllerDelegate {
+    
+    func hideMe(sender: MenuViewController) {
+        grayView.removeFromSuperview()
+    }
+    
+    func showMe(sender: MenuViewController) {
+        view.insertSubview(grayView, belowSubview: sender.view)
+    }
+    
+    func destroyMe(sender: MenuViewController) {
+        sender.view.removeFromSuperview()
+        sender.removeFromParentViewController()
+    }
+    
+    func showFavorites() {
+        topicScrollView.tapFavorites() // simulate favorite button press
+    }
+    
 }
 
 // MARK: UICollectionViewDataSource
 extension MainViewController: UICollectionViewDataSource {
 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        if indexPath.row >= articles.count {
+        if indexPath.row >= collectionViewData.count {
             if loadingNewArticles { // loading indicator
                 var loadingCell = collectionView.dequeueReusableCellWithReuseIdentifier("loadingCell", forIndexPath: indexPath) as! UICollectionViewCell
                 return loadingCell
@@ -231,35 +265,50 @@ extension MainViewController: UICollectionViewDataSource {
                 return noMoreArticlesCell
             }
             else { //start loading new articles
-                var pageToLoad = articles.count / DICConstants.articlesPerPage + 1 // next page
-                loadNewArticles(category: self.category, page : pageToLoad)
+                page += 1
+                loadNewArticles()
                 return self.collectionView(collectionView, cellForItemAtIndexPath: indexPath)
             }
 
         }
 
-        // otherwise, show articles normally by getting new cell and populating it with data
-        let article = articles[indexPath.row]
+        // get new cell and populate it with data
+        let data = collectionViewData[indexPath.row]
         
-        var articleCell : ArticleViewCell!
-        if article.image == nil { // normal cell
-            articleCell = collectionView.dequeueReusableCellWithReuseIdentifier("articleViewCell", forIndexPath: indexPath) as! ArticleViewCell
-        } else { // image cell
-            articleCell = collectionView.dequeueReusableCellWithReuseIdentifier("articleViewCellWithImage", forIndexPath: indexPath) as! ArticleViewCellWithImage
-            (articleCell as! ArticleViewCellWithImage).image = article.image
+        if let article = data as? DICArticle { // article cell
+            var articleCell : ArticleViewCell!
+            if article.image == nil { // normal cell
+                articleCell = collectionView.dequeueReusableCellWithReuseIdentifier("articleViewCell", forIndexPath: indexPath) as! ArticleViewCell
+            } else { // image cell
+                articleCell = collectionView.dequeueReusableCellWithReuseIdentifier("articleViewCellWithImage", forIndexPath: indexPath) as! ArticleViewCellWithImage
+                (articleCell as! ArticleViewCellWithImage).image = article.image
+            }
+            
+            // set info
+            articleCell.title = article.title
+            articleCell.descr = article.descrWithoutHTML
+            articleCell.isFavorite = favorites.findFavoriteWithTitle(article.title)
+            
+            // set tap delegate
+            if (articleCell.delegate == nil) {
+                articleCell.delegate = self
+            }
+            
+            return articleCell
+        } else if let installAds = data as? [GADNativeCustomTemplateAd] { // app install ads
+            // record impressions
+            for installAd in installAds {
+                installAd.recordImpression()
+            }
+            
+            let installAdCell = collectionView.dequeueReusableCellWithReuseIdentifier("adInstallCell", forIndexPath: indexPath) as! AppInstallAdCell
+            installAdCell.ads = installAds
+            installAdCell.delegate = self
+            return installAdCell
         }
         
-        // set info
-        articleCell.title = article.title
-        articleCell.descr = article.descrWithoutHTML
-        articleCell.isFavorite = favorites.findFavoriteWithTitle(article.title)
-        
-        // set tap delegate
-        if (articleCell.delegate == nil) {
-            articleCell.delegate = self
-        }
-        
-        return articleCell
+        // should never get here
+        return collectionView.dequeueReusableCellWithReuseIdentifier("notARealCell", forIndexPath: indexPath) as! UICollectionViewCell
     }
 
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -267,7 +316,16 @@ extension MainViewController: UICollectionViewDataSource {
     }
 
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return articles.count + 1 // so we can show the activity indicator
+        return collectionViewData.count + 1 // so we can show the activity indicator
+    }
+    
+}
+
+// MARK: AppInstallAdCellDelegate
+extension MainViewController: AppInstallAdCellDelegate {
+    
+    func appInstallAdCellTapped(forAd: GADNativeCustomTemplateAd) {
+        forAd.performClickOnAssetWithKey(DICConstants.AppInstallAd.ctaKey, customClickHandler: nil)
     }
     
 }
@@ -278,7 +336,7 @@ extension MainViewController: ArticleViewCellDelegate {
     
     func articleViewCellTapped(cell : ArticleViewCell, tappedFavorite : Bool) {
         let indexPath = collectionView.indexPathForCell(cell)
-        let article = articles[indexPath!.row]
+        let article = collectionViewData[indexPath!.row] as! DICArticle
         
         if tappedFavorite { // don't segue, just change favorite status
             if cell.isFavorite { // remove from favorites
@@ -294,6 +352,11 @@ extension MainViewController: ArticleViewCellDelegate {
             
             // get article to show and segue to it
             articleToShow = article
+            
+            // log flurry event
+            let articleParams = ["Title": article.title, /*"Author": article.author,*/ "Category": article.category]
+            Flurry.logEvent(DICConstants.Flurry.ARTICLE_READ_EVENT, withParameters: articleParams, timed: true)
+            
             performSegueWithIdentifier("showArticleViewController", sender: self)
         }
     }
@@ -308,3 +371,11 @@ extension MainViewController: ArticleViewCellDelegate {
     
 }
 
+// MARK: UIScrollViewDelegate
+extension MainViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        headerView.didScroll(scrollView.contentOffset.y)
+    }
+    
+}

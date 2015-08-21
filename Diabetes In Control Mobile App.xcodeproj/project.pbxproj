@@ -7,10 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F2B97ED1B613AF600367F6D /* TopicScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2B97EC1B613AF600367F6D /* TopicScrollView.swift */; };
 		0F43BCAD1B3884E800FD53BF /* DICClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43BCAC1B3884E800FD53BF /* DICClient.swift */; };
 		0F43BCAF1B3884FD00FD53BF /* DICConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43BCAE1B3884FD00FD53BF /* DICConstants.swift */; };
 		0F43BCB11B3885BC00FD53BF /* DICArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43BCB01B3885BC00FD53BF /* DICArticle.swift */; };
 		0F43BCB51B388A8100FD53BF /* DICXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F43BCB41B388A8100FD53BF /* DICXMLParser.swift */; };
+		0F4B094A1B739B0F00FB19B9 /* GADNativeAppInstallAdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F4B09491B739B0F00FB19B9 /* GADNativeAppInstallAdView.xib */; };
+		0F4B094C1B73A25B00FB19B9 /* GADNativeAppInstallAdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4B094B1B73A25B00FB19B9 /* GADNativeAppInstallAdCell.swift */; };
+		0F4B094E1B73AF1F00FB19B9 /* GADNativeAppInstallAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4B094D1B73AF1F00FB19B9 /* GADNativeAppInstallAdView.swift */; };
+		0F4B09501B73B94400FB19B9 /* AppInstallAdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4B094F1B73B94400FB19B9 /* AppInstallAdCell.swift */; };
+		0F4B09521B73DB2900FB19B9 /* DICAdLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4B09511B73DB2900FB19B9 /* DICAdLoader.swift */; };
+		0F4B09561B73F78B00FB19B9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F4B09551B73F78B00FB19B9 /* SystemConfiguration.framework */; };
+		0F4B09581B73F7C600FB19B9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F4B09571B73F7C600FB19B9 /* Security.framework */; };
 		0F7356571B544452000315F7 /* ScrollViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7356561B544452000315F7 /* ScrollViewFactory.swift */; };
 		0F78D2FF1B554BA3007297C1 /* ArticleViewCellWithImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F78D2FE1B554BA3007297C1 /* ArticleViewCellWithImage.swift */; };
 		0F82C7291B446B2700ECABCD /* DICFavoritesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F82C7281B446B2700ECABCD /* DICFavoritesList.swift */; };
@@ -36,13 +44,19 @@
 		0F82C7471B456F1A00ECABCD /* OpenSans-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F82C7331B456F1A00ECABCD /* OpenSans-SemiboldItalic.ttf */; };
 		0F8911921B3AE93B0043AE9B /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8911911B3AE93B0043AE9B /* ArticleViewController.swift */; };
 		0FC77F6F1B31B88F00C82887 /* ArticleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC77F6E1B31B88F00C82887 /* ArticleViewCell.swift */; };
+		0FC9EF681B60371300C80D7C /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FB8AB2E1B6035FB00A5B0E1 /* GoogleMobileAds.framework */; };
+		0FCF7E421B74F0A60012692D /* libFlurry_6.7.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FCF7E411B74F0A60012692D /* libFlurry_6.7.0.a */; };
 		0FD67E751B57EAE600ABEAA1 /* DICArchiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD67E741B57EAE600ABEAA1 /* DICArchiver.swift */; };
+		0FD67E791B583FD500ABEAA1 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD67E781B583FD500ABEAA1 /* HeaderView.swift */; };
 		0FDE77D31B307B7C009A70A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FDE77D21B307B7C009A70A4 /* AppDelegate.swift */; };
 		0FDE77D51B307B7C009A70A4 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FDE77D41B307B7C009A70A4 /* MainViewController.swift */; };
 		0FDE77D81B307B7C009A70A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0FDE77D61B307B7C009A70A4 /* Main.storyboard */; };
 		0FDE77DA1B307B7C009A70A4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FDE77D91B307B7C009A70A4 /* Images.xcassets */; };
 		0FDE77DD1B307B7C009A70A4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FDE77DB1B307B7C009A70A4 /* LaunchScreen.xib */; };
 		0FDE77E91B307B7C009A70A4 /* Diabetes_In_Control_Mobile_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FDE77E81B307B7C009A70A4 /* Diabetes_In_Control_Mobile_AppTests.swift */; };
+		0FF7EE651B5D48CD0066030A /* DICArticleCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF7EE641B5D48CD0066030A /* DICArticleCache.swift */; };
+		0FF7EE6D1B5E8FCA0066030A /* Mediation Adapters in Resources */ = {isa = PBXBuildFile; fileRef = 0FF7EE6B1B5E8FCA0066030A /* Mediation Adapters */; };
+		0FF7EE711B5E93EF0066030A /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF7EE701B5E93EF0066030A /* MenuViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,10 +70,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0F2B97EC1B613AF600367F6D /* TopicScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicScrollView.swift; sourceTree = "<group>"; };
 		0F43BCAC1B3884E800FD53BF /* DICClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DICClient.swift; sourceTree = "<group>"; };
 		0F43BCAE1B3884FD00FD53BF /* DICConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DICConstants.swift; sourceTree = "<group>"; };
 		0F43BCB01B3885BC00FD53BF /* DICArticle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DICArticle.swift; sourceTree = "<group>"; };
 		0F43BCB41B388A8100FD53BF /* DICXMLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DICXMLParser.swift; sourceTree = "<group>"; };
+		0F4B09491B739B0F00FB19B9 /* GADNativeAppInstallAdView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GADNativeAppInstallAdView.xib; sourceTree = "<group>"; };
+		0F4B094B1B73A25B00FB19B9 /* GADNativeAppInstallAdCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GADNativeAppInstallAdCell.swift; sourceTree = "<group>"; };
+		0F4B094D1B73AF1F00FB19B9 /* GADNativeAppInstallAdView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GADNativeAppInstallAdView.swift; sourceTree = "<group>"; };
+		0F4B094F1B73B94400FB19B9 /* AppInstallAdCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInstallAdCell.swift; sourceTree = "<group>"; };
+		0F4B09511B73DB2900FB19B9 /* DICAdLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DICAdLoader.swift; sourceTree = "<group>"; };
+		0F4B09551B73F78B00FB19B9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		0F4B09571B73F7C600FB19B9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		0F7356561B544452000315F7 /* ScrollViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollViewFactory.swift; sourceTree = "<group>"; };
 		0F78D2FE1B554BA3007297C1 /* ArticleViewCellWithImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleViewCellWithImage.swift; sourceTree = "<group>"; };
 		0F82C7281B446B2700ECABCD /* DICFavoritesList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DICFavoritesList.swift; sourceTree = "<group>"; };
@@ -74,8 +96,13 @@
 		0F82C7321B456F1A00ECABCD /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
 		0F82C7331B456F1A00ECABCD /* OpenSans-SemiboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiboldItalic.ttf"; sourceTree = "<group>"; };
 		0F8911911B3AE93B0043AE9B /* ArticleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleViewController.swift; sourceTree = "<group>"; };
+		0FB8AB2E1B6035FB00A5B0E1 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
 		0FC77F6E1B31B88F00C82887 /* ArticleViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleViewCell.swift; sourceTree = "<group>"; };
+		0FC9EF651B60370C00C80D7C /* Diabetes In Control Mobile App.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "Diabetes In Control Mobile App.xcodeproj"; sourceTree = "<group>"; };
+		0FCF7E401B74E5620012692D /* DiabetesInControlMobileApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DiabetesInControlMobileApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		0FCF7E411B74F0A60012692D /* libFlurry_6.7.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_6.7.0.a; sourceTree = "<group>"; };
 		0FD67E741B57EAE600ABEAA1 /* DICArchiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DICArchiver.swift; sourceTree = "<group>"; };
+		0FD67E781B583FD500ABEAA1 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		0FDE77CD1B307B7C009A70A4 /* Diabetes In Control Mobile App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Diabetes In Control Mobile App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FDE77D11B307B7C009A70A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0FDE77D21B307B7C009A70A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +113,10 @@
 		0FDE77E21B307B7C009A70A4 /* Diabetes In Control Mobile AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Diabetes In Control Mobile AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FDE77E71B307B7C009A70A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0FDE77E81B307B7C009A70A4 /* Diabetes_In_Control_Mobile_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diabetes_In_Control_Mobile_AppTests.swift; sourceTree = "<group>"; };
+		0FF7EE641B5D48CD0066030A /* DICArticleCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DICArticleCache.swift; sourceTree = "<group>"; };
+		0FF7EE6A1B5E8FCA0066030A /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
+		0FF7EE6B1B5E8FCA0066030A /* Mediation Adapters */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Mediation Adapters"; sourceTree = "<group>"; };
+		0FF7EE701B5E93EF0066030A /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +124,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FCF7E421B74F0A60012692D /* libFlurry_6.7.0.a in Frameworks */,
+				0F4B09581B73F7C600FB19B9 /* Security.framework in Frameworks */,
+				0F4B09561B73F78B00FB19B9 /* SystemConfiguration.framework in Frameworks */,
+				0FC9EF681B60371300C80D7C /* GoogleMobileAds.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +149,8 @@
 				0F43BCB01B3885BC00FD53BF /* DICArticle.swift */,
 				0F43BCAE1B3884FD00FD53BF /* DICConstants.swift */,
 				0FD67E741B57EAE600ABEAA1 /* DICArchiver.swift */,
+				0FF7EE641B5D48CD0066030A /* DICArticleCache.swift */,
+				0F4B09511B73DB2900FB19B9 /* DICAdLoader.swift */,
 				0F82C7281B446B2700ECABCD /* DICFavoritesList.swift */,
 			);
 			name = Model;
@@ -123,8 +160,13 @@
 			isa = PBXGroup;
 			children = (
 				0FC77F6E1B31B88F00C82887 /* ArticleViewCell.swift */,
+				0F4B094F1B73B94400FB19B9 /* AppInstallAdCell.swift */,
 				0F78D2FE1B554BA3007297C1 /* ArticleViewCellWithImage.swift */,
+				0FD67E781B583FD500ABEAA1 /* HeaderView.swift */,
 				0F7356561B544452000315F7 /* ScrollViewFactory.swift */,
+				0F4B094D1B73AF1F00FB19B9 /* GADNativeAppInstallAdView.swift */,
+				0F2B97EC1B613AF600367F6D /* TopicScrollView.swift */,
+				0F4B094B1B73A25B00FB19B9 /* GADNativeAppInstallAdCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -134,13 +176,24 @@
 			children = (
 				0FDE77D41B307B7C009A70A4 /* MainViewController.swift */,
 				0F8911911B3AE93B0043AE9B /* ArticleViewController.swift */,
+				0FF7EE701B5E93EF0066030A /* MenuViewController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		0FC9EF661B60370C00C80D7C /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
 			sourceTree = "<group>";
 		};
 		0FDE77C41B307B7C009A70A4 = {
 			isa = PBXGroup;
 			children = (
+				0FCF7E411B74F0A60012692D /* libFlurry_6.7.0.a */,
+				0F4B09571B73F7C600FB19B9 /* Security.framework */,
+				0F4B09551B73F78B00FB19B9 /* SystemConfiguration.framework */,
+				0FC9EF651B60370C00C80D7C /* Diabetes In Control Mobile App.xcodeproj */,
+				0FB8AB2E1B6035FB00A5B0E1 /* GoogleMobileAds.framework */,
 				0FDE77CF1B307B7C009A70A4 /* Diabetes In Control Mobile App */,
 				0FDE77E51B307B7C009A70A4 /* Diabetes In Control Mobile AppTests */,
 				0FDE77CE1B307B7C009A70A4 /* Products */,
@@ -160,10 +213,12 @@
 			isa = PBXGroup;
 			children = (
 				0FDE77D61B307B7C009A70A4 /* Main.storyboard */,
+				0F4B09491B739B0F00FB19B9 /* GADNativeAppInstallAdView.xib */,
 				0F43BCB31B3885CF00FD53BF /* Model */,
 				0F8911931B3AE95E0043AE9B /* View */,
 				0F8911941B3AE9920043AE9B /* Controller */,
 				0FDE77D21B307B7C009A70A4 /* AppDelegate.swift */,
+				0FCF7E401B74E5620012692D /* DiabetesInControlMobileApp-Bridging-Header.h */,
 				0FDE77D91B307B7C009A70A4 /* Images.xcassets */,
 				0FDE77DB1B307B7C009A70A4 /* LaunchScreen.xib */,
 				0FDE77D01B307B7C009A70A4 /* Supporting Files */,
@@ -174,6 +229,8 @@
 		0FDE77D01B307B7C009A70A4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0FF7EE6A1B5E8FCA0066030A /* GoogleMobileAds.framework */,
+				0FF7EE6B1B5E8FCA0066030A /* Mediation Adapters */,
 				0F82C72A1B456F1A00ECABCD /* OpenSans-Bold.ttf */,
 				0F82C72B1B456F1A00ECABCD /* OpenSans-BoldItalic.ttf */,
 				0F82C72C1B456F1A00ECABCD /* OpenSans-ExtraBold.ttf */,
@@ -250,7 +307,7 @@
 		0FDE77C51B307B7C009A70A4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Diabetes In Control";
 				TargetAttributes = {
 					0FDE77CC1B307B7C009A70A4 = {
@@ -274,6 +331,12 @@
 			mainGroup = 0FDE77C41B307B7C009A70A4;
 			productRefGroup = 0FDE77CE1B307B7C009A70A4 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 0FC9EF661B60370C00C80D7C /* Products */;
+					ProjectRef = 0FC9EF651B60370C00C80D7C /* Diabetes In Control Mobile App.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				0FDE77CC1B307B7C009A70A4 /* Diabetes In Control Mobile App */,
@@ -291,12 +354,14 @@
 				0F82C7461B456F1A00ECABCD /* OpenSans-SemiboldItalic.ttf in Resources */,
 				0FDE77D81B307B7C009A70A4 /* Main.storyboard in Resources */,
 				0F82C7421B456F1A00ECABCD /* OpenSans-Regular.ttf in Resources */,
+				0F4B094A1B739B0F00FB19B9 /* GADNativeAppInstallAdView.xib in Resources */,
 				0F82C73C1B456F1A00ECABCD /* OpenSans-Italic.ttf in Resources */,
 				0F82C73A1B456F1A00ECABCD /* OpenSans-ExtraBoldItalic.ttf in Resources */,
 				0FDE77DD1B307B7C009A70A4 /* LaunchScreen.xib in Resources */,
 				0F82C7401B456F1A00ECABCD /* OpenSans-LightItalic.ttf in Resources */,
 				0F82C7341B456F1A00ECABCD /* OpenSans-Bold.ttf in Resources */,
 				0FDE77DA1B307B7C009A70A4 /* Images.xcassets in Resources */,
+				0FF7EE6D1B5E8FCA0066030A /* Mediation Adapters in Resources */,
 				0F82C73E1B456F1A00ECABCD /* OpenSans-Light.ttf in Resources */,
 				0F82C7361B456F1A00ECABCD /* OpenSans-BoldItalic.ttf in Resources */,
 				0F82C7381B456F1A00ECABCD /* OpenSans-ExtraBold.ttf in Resources */,
@@ -328,17 +393,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FDE77D51B307B7C009A70A4 /* MainViewController.swift in Sources */,
+				0FF7EE711B5E93EF0066030A /* MenuViewController.swift in Sources */,
 				0F8911921B3AE93B0043AE9B /* ArticleViewController.swift in Sources */,
 				0F82C7291B446B2700ECABCD /* DICFavoritesList.swift in Sources */,
 				0F43BCAD1B3884E800FD53BF /* DICClient.swift in Sources */,
 				0FD67E751B57EAE600ABEAA1 /* DICArchiver.swift in Sources */,
 				0F43BCB51B388A8100FD53BF /* DICXMLParser.swift in Sources */,
+				0F4B09501B73B94400FB19B9 /* AppInstallAdCell.swift in Sources */,
+				0F4B094E1B73AF1F00FB19B9 /* GADNativeAppInstallAdView.swift in Sources */,
 				0FC77F6F1B31B88F00C82887 /* ArticleViewCell.swift in Sources */,
 				0F7356571B544452000315F7 /* ScrollViewFactory.swift in Sources */,
+				0F2B97ED1B613AF600367F6D /* TopicScrollView.swift in Sources */,
+				0FF7EE651B5D48CD0066030A /* DICArticleCache.swift in Sources */,
 				0F43BCAF1B3884FD00FD53BF /* DICConstants.swift in Sources */,
+				0F4B094C1B73A25B00FB19B9 /* GADNativeAppInstallAdCell.swift in Sources */,
 				0FDE77D31B307B7C009A70A4 /* AppDelegate.swift in Sources */,
+				0F4B09521B73DB2900FB19B9 /* DICAdLoader.swift in Sources */,
 				0F43BCB11B3885BC00FD53BF /* DICArticle.swift in Sources */,
 				0F78D2FF1B554BA3007297C1 /* ArticleViewCellWithImage.swift in Sources */,
+				0FD67E791B583FD500ABEAA1 /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,10 +543,19 @@
 				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "Diabetes In Control Mobile App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "DiabetesInControlMobileApp-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -484,10 +566,19 @@
 				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "Diabetes In Control Mobile App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "DiabetesInControlMobileApp-Bridging-Header.h";
 			};
 			name = Release;
 		};

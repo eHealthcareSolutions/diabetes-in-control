@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="OpenSans-Regular.ttf">
+            <string>OpenSans</string>
+        </mutableArray>
+        <mutableArray key="OpenSans-Semibold.ttf">
+            <string>OpenSans-Semibold</string>
+            <string>OpenSans-Semibold</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <view contentMode="scaleToFill" id="nJf-FU-hkK" customClass="GADNativeAppInstallAdView" customModule="Diabetes_In_Control_Mobile_App" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rp5-kt-5kT">
+                    <rect key="frame" x="2" y="49" width="596" height="503"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="9"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fmb-lC-wGw">
+                    <rect key="frame" x="288" y="302" width="24" height="13"/>
+                    <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="9"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HNh-uj-4p7">
+                    <rect key="frame" x="289" y="314" width="23" height="13"/>
+                    <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="9"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5vX-L8-0u9">
+                    <rect key="frame" x="53" y="500" width="494" height="100"/>
+                    <color key="backgroundColor" red="0.0" green="0.66274509800000003" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="12"/>
+                    <state key="normal" title="BUY NOW">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="9"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cZi-GJ-WgU">
+                    <rect key="frame" x="150" y="0.0" width="300" height="300"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XyP-lX-RHm">
+                            <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="XyP-lX-RHm" firstAttribute="leading" secondItem="cZi-GJ-WgU" secondAttribute="leading" id="6HU-Sa-0VS"/>
+                        <constraint firstAttribute="width" secondItem="cZi-GJ-WgU" secondAttribute="height" multiplier="1:1" id="S3S-K0-cFD"/>
+                        <constraint firstAttribute="trailing" secondItem="XyP-lX-RHm" secondAttribute="trailing" id="g9E-kA-dwg"/>
+                        <constraint firstItem="XyP-lX-RHm" firstAttribute="top" secondItem="cZi-GJ-WgU" secondAttribute="top" id="sNT-NV-BbL"/>
+                        <constraint firstAttribute="bottom" secondItem="XyP-lX-RHm" secondAttribute="bottom" id="wzU-7a-aFc"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="9"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="cZi-GJ-WgU" firstAttribute="width" secondItem="nJf-FU-hkK" secondAttribute="width" multiplier="0.5" id="10R-jT-Ugj"/>
+                <constraint firstAttribute="centerX" secondItem="Fmb-lC-wGw" secondAttribute="centerX" id="4Pc-4d-W1B"/>
+                <constraint firstItem="cZi-GJ-WgU" firstAttribute="height" secondItem="nJf-FU-hkK" secondAttribute="height" multiplier="0.5" id="8gQ-JI-FZY"/>
+                <constraint firstAttribute="height" secondItem="5vX-L8-0u9" secondAttribute="height" multiplier="6" id="DjG-ll-5ln"/>
+                <constraint firstItem="Fmb-lC-wGw" firstAttribute="top" secondItem="cZi-GJ-WgU" secondAttribute="bottom" constant="2" id="FLb-W7-UmW"/>
+                <constraint firstAttribute="trailing" secondItem="rp5-kt-5kT" secondAttribute="trailing" constant="2" id="HDz-6D-ANx"/>
+                <constraint firstAttribute="bottom" secondItem="5vX-L8-0u9" secondAttribute="bottom" id="MFd-ay-Kfa"/>
+                <constraint firstAttribute="bottom" secondItem="rp5-kt-5kT" secondAttribute="bottom" id="NDM-WB-MEd"/>
+                <constraint firstAttribute="centerY" secondItem="5vX-L8-0u9" secondAttribute="centerY" id="Qpa-IF-1aS"/>
+                <constraint firstItem="rp5-kt-5kT" firstAttribute="top" secondItem="nJf-FU-hkK" secondAttribute="top" id="VnZ-ZV-ww8"/>
+                <constraint firstAttribute="centerY" secondItem="rp5-kt-5kT" secondAttribute="centerY" id="X3e-Hr-0KK"/>
+                <constraint firstItem="rp5-kt-5kT" firstAttribute="leading" secondItem="nJf-FU-hkK" secondAttribute="leading" constant="2" id="YO4-jK-Z3j"/>
+                <constraint firstAttribute="centerX" secondItem="5vX-L8-0u9" secondAttribute="centerX" id="eQO-wP-nJW"/>
+                <constraint firstAttribute="centerX" secondItem="cZi-GJ-WgU" secondAttribute="centerX" id="fVp-xx-HEZ"/>
+                <constraint firstAttribute="centerX" secondItem="HNh-uj-4p7" secondAttribute="centerX" id="hfj-9L-gkM"/>
+                <constraint firstItem="HNh-uj-4p7" firstAttribute="top" secondItem="Fmb-lC-wGw" secondAttribute="bottom" id="jBZ-IA-4KG"/>
+                <constraint firstItem="cZi-GJ-WgU" firstAttribute="top" secondItem="nJf-FU-hkK" secondAttribute="top" id="uAb-Cu-oly"/>
+                <constraint firstAttribute="width" secondItem="5vX-L8-0u9" secondAttribute="width" multiplier="17:14" id="yJO-KS-GkE"/>
+                <constraint firstAttribute="height" secondItem="rp5-kt-5kT" secondAttribute="height" multiplier="37:31" id="yxP-S9-zmz"/>
+            </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="NDM-WB-MEd"/>
+                    <exclude reference="VnZ-ZV-ww8"/>
+                    <exclude reference="10R-jT-Ugj"/>
+                    <exclude reference="Qpa-IF-1aS"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="bodyLabel" destination="HNh-uj-4p7" id="css-cr-HNc"/>
+                <outlet property="ctaButton" destination="5vX-L8-0u9" id="07G-xW-f01"/>
+                <outlet property="iconImageView" destination="XyP-lX-RHm" id="3kt-I4-Qv9"/>
+                <outlet property="titleLabel" destination="Fmb-lC-wGw" id="16f-gJ-G5j"/>
+            </connections>
+        </view>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+    </objects>
+</document>

@@ -24,10 +24,10 @@ class DICArchiver {
     }
     
     func archive(obj : AnyObject) {
-        
         NSKeyedArchiver.archiveRootObject(obj, toFile: dataFilePath)
     }
 
+    // returns object unless it doesn't exist, then it returns nil
     func unarchive() -> AnyObject? {
         if fileManager.fileExistsAtPath(dataFilePath) {
             // if archive exists, get object
